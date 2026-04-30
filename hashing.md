@@ -78,8 +78,31 @@ Order of n
 LeetCode Product of Array Except Self
 ---
 
+FIRST APPROACH
 
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> arr(n,1);
 
+        int left = 1;
+        for(int i=0;i<n;i++){
+            arr[i] *= left;
+            left *= nums[i];
+        }
+
+        int right = 1;
+        for(int i=n-1;i>=0;i--){
+            arr[i] *= right;
+            right *= nums[i];
+        }
+        return arr;
+
+    }
+};
+
+Order of n time and order of 1 space
 
 LeetCode Top K Frequent Elements
 LeetCode Longest Consecutive Sequence
