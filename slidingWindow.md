@@ -53,17 +53,17 @@ Longest Substring Without Repeating Characters
 --
 
 int lengthOfLongestSubstring(string s) {
-    unordered_set<char> seen;
-    int left = 0, longest = 0;
+    unordered_set<char> mp;
+    int i = 0, longest = 0;
 
-    for (int right = 0; right < s.size(); right++) {
-        while (seen.count(s[right])) {
-            seen.erase(s[left]);
-            left++;
+    for (int j = 0; j < s.size(); j++) {
+        while (mp.count(s[j])) {
+            mp.erase(s[i]);
+            i++;
         }
 
-        seen.insert(s[right]);
-        longest = max(longest, right - left + 1);
+        mp.insert(s[j]);
+        longest = max(longest, j - i + 1);
     }
 
     return longest;
