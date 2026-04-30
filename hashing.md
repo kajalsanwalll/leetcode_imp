@@ -146,8 +146,47 @@ public:
 order (n log n);
 
 
-SECOND APPROACH (bucket sort)
+SECOND APPROACH (bucket sort) order n
 
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        
+        int n = nums.size();
 
+        if(n==1){
+            return nums;
+        }
+
+        unordered_map<int,int> freq;
+
+        for(int i=0;i<n;i++){
+
+            freq[nums[i]]++;
+        }
+        
+        vector<vector<int>> bucket(n+1);
+
+        for(auto x : freq){
+            bucket[x.second].push_back(x.first);
+        }
+
+        vector<int> ans;
+
+        for(int i = n; i>=0 && ans.size()<k;i--){
+
+            for(int num : bucket[i]){
+                ans.push_back(num);
+                if(ans.size() == k){
+                    return ans;
+                }
+            }
+        }
+
+        return ans;
+    }
+};
+
+order (n);
 
 LeetCode Longest Consecutive Sequence
