@@ -75,6 +75,40 @@ Order(n);
 Permutation in String
 ---
 
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        int n = s2.length();
+        if(s1.length() > s2.length()) return false;
+        unordered_map<char,int> s1Map;
+        unordered_map<char,int> s2Map;
+
+        for(int i=0;i<s1.length();i++){
+            s1Map[s1[i]]++;
+            s2Map[s2[i]]++;
+        }
+
+        if(s1Map == s2Map) return true;
+
+        int left=0;
+
+        for(int right=s1.length();right<n;right++){
+            s2Map[s2[right]]++;
+            s2Map[s2[left]]--;
+
+            if(s2Map[s2[left]] == 0){
+                s2Map.erase(s2[left]);
+            }
+            left++;
+
+            if(s1Map == s2Map){
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
 Minimum Size Subarray Sum
 ---
 
