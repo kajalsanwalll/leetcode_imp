@@ -105,4 +105,49 @@ public:
 Order of n time and order of 1 space
 
 LeetCode Top K Frequent Elements
+---
+ 
+FIRST APPROACH (heap,priority queue)
+
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        
+        int n = nums.size();
+
+        if(n==1){
+            return nums;
+        }
+
+        unordered_map<int,int> freq;
+
+        for(int i=0;i<n;i++){
+
+            freq[nums[i]]++;
+        }
+        
+        priority_queue<pair<int,int>> pq;
+
+        for(auto x : freq){
+            pq.push({x.second,x.first});
+        }
+
+        vector<int> ans;
+
+        while(k--){
+            ans.push_back(pq.top().second);
+            pq.pop();
+        }
+
+        return ans;
+    }
+};
+
+order (n log n);
+
+
+SECOND APPROACH (bucket sort)
+
+
+
 LeetCode Longest Consecutive Sequence
