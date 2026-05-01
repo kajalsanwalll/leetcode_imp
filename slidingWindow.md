@@ -81,7 +81,7 @@ class Solution {
 public:
     bool checkInclusion(string s1, string s2) {
 
-        
+
         int n = s2.length();
         if(s1.length() > s2.length()) return false;
         unordered_map<char,int> s1Map;
@@ -115,6 +115,39 @@ public:
 
 Minimum Size Subarray Sum
 ---
+
+APPROACH 1
+
+
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int n =  nums.size();
+        int sum =0;
+        int length= numeric_limits<int>::max();
+        int left =0;
+
+        for(int right=0;right<n;right++){
+            sum += nums[right];
+
+            while(sum >= target){
+                if(right - left + 1 < length){
+                    length = right - left + 1 ;
+                }
+                sum -= nums[left];
+                left++;
+            }
+        }
+        return length != numeric_limits<int>::max()? length : 0;
+    }
+};
+
+Order(n);
+
+
+APPROACH 2
+
+
 
 Why:
 Amazon OA frequently asks window + hashmap.
