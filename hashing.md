@@ -83,6 +83,8 @@ FIRST APPROACH
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
+
+
         int n = nums.size();
         vector<int> arr(n,1);
 
@@ -195,6 +197,8 @@ LeetCode Longest Consecutive Sequence
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
+
+        
        unordered_set<int> s(nums.begin(), nums.end());
 
        int longest = 0;
