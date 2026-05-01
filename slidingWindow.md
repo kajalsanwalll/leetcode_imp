@@ -53,17 +53,19 @@ Longest Substring Without Repeating Characters
 --
 
 int lengthOfLongestSubstring(string s) {
-    unordered_set<char> mp;
-    int i = 0, longest = 0;
 
-    for (int j = 0; j < s.size(); j++) {
-        while (mp.count(s[j])) {
-            mp.erase(s[i]);
-            i++;
+
+    unordered_set<char> SET;
+    int left = 0, longest = 0;
+
+    for (int right = 0; right < s.size(); right++) {
+        while (SET.count(s[right])) {
+            SET.erase(s[left]);
+            left++;
         }
 
-        mp.insert(s[j]);
-        longest = max(longest, j - i + 1);
+        SET.insert(s[right]);
+        longest = max(longest, right - left + 1);
     }
 
     return longest;
@@ -78,6 +80,8 @@ Permutation in String
 class Solution {
 public:
     bool checkInclusion(string s1, string s2) {
+
+        
         int n = s2.length();
         if(s1.length() > s2.length()) return false;
         unordered_map<char,int> s1Map;
