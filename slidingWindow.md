@@ -145,7 +145,34 @@ public:
 Order(n);
 
 
-APPROACH 2
+APPROACH 2 (Prefix sum + binary)
+
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int n =  nums.size();
+        int length = INT_MAX;
+        
+        vector<long long> prefix(n+1,0);
+
+        for(int i=0;i<n;i++){
+            prefix[i+1] = nums[i]+ prefix[i];
+        }
+
+        for(int i=0;i<n;i++){
+            long long required = target + prefix[i];
+
+            auto okay = lower_bound(prefix.begin(), prefix.end(), required);
+            if(okay != prefix.end()){
+                int j = okay - prefix.begin();
+                length = min(length, j-i);
+            }
+        }
+        return length != INT_MAX ? length : 0;
+    }
+};
+
+Order(n log n);
 
 
 
