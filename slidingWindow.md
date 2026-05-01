@@ -3,7 +3,7 @@
 
 Very common in OA.
 
-Maximum Sum of Subarray of Size K
+Maximum Sum of Subarray of Size K ✅
 ---
 
 int maxSum(vector<int>& nums, int k) {
@@ -26,7 +26,7 @@ int maxSum(vector<int>& nums, int k) {
 Order(n);
 
 
-Best Time to Buy and Sell Stock
+Best Time to Buy and Sell Stock ✅
 --
 
 class Solution {
@@ -49,7 +49,7 @@ public:
 
 Order(n);
 
-Longest Substring Without Repeating Characters
+Longest Substring Without Repeating Characters ✅
 --
 
 int lengthOfLongestSubstring(string s) {
@@ -74,7 +74,7 @@ int lengthOfLongestSubstring(string s) {
 Order(n);
 
 
-Permutation in String
+Permutation in String ✅
 ---
 
 class Solution {
@@ -113,7 +113,7 @@ public:
     }
 };
 
-Minimum Size Subarray Sum
+Minimum Size Subarray Sum ✅
 ---
 
 APPROACH 1

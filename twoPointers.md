@@ -1,9 +1,9 @@
-3. Two Pointers
+3. Two Pointers 
 --
 
 Simple but frequent.
 
-LeetCode Valid Palindrome
+LeetCode Valid Palindrome ✅
 --
 
 class Solution {
@@ -30,7 +30,7 @@ public:
     }
 };
 
-LeetCode 3Sum
+LeetCode 3Sum ✅
 ---
 
 class Solution {
@@ -74,7 +74,7 @@ public:
 
 O(n^2);
 
-LeetCode Container With Most Water
+LeetCode Container With Most Water ✅
 --
 
 class Solution {

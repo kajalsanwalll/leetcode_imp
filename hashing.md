@@ -75,7 +75,7 @@ public:
 Order of n
 
 
-LeetCode Product of Array Except Self
+LeetCode Product of Array Except Self ✅
 ---
 
 FIRST APPROACH
@@ -106,7 +106,7 @@ public:
 
 Order of n time and order of 1 space
 
-LeetCode Top K Frequent Elements
+LeetCode Top K Frequent Elements ✅
 ---
  
 FIRST APPROACH (heap,priority queue)
@@ -191,7 +191,7 @@ public:
 
 order (n);
 
-LeetCode Longest Consecutive Sequence
+LeetCode Longest Consecutive Sequence ✅
 ---
 
 class Solution {
