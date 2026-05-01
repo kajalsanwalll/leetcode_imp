@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Amazon Intern Prep 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #e8e8f0;
+    --muted: #6b6b82;
+    --accent: #ff6b35;
+    --accent2: #ffb347;
+    --green: #2ecc71;
+    --green-dim: rgba(46,204,113,0.08);
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-display: 'Syne', sans-serif;
+  }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-mono); min-height: 100vh; overflow-x: hidden; }
+
+  .header { padding: 40px 40px 28px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,107,53,0.08) 0%, transparent 70%); pointer-events: none; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-box { width: 36px; height: 36px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 16px; color: #fff; flex-shrink: 0; }
+  .header h1 { font-family: var(--font-display); font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+  .header h1 span { color: var(--accent); }
+  .subtitle { font-size: 11px; color: var(--muted); margin-top: 3px; letter-spacing: 0.05em; }
+
+  .stats-row { display: flex; gap: 14px; margin-top: 28px; flex-wrap: wrap; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; min-width: 100px; }
+  .stat-n { font-family: var(--font-display); font-size: 30px; font-weight: 800; line-height: 1; }
+  .stat-n.green { color: var(--green); }
+  .stat-n.accent { color: var(--accent); }
+  .stat-label { font-size: 10px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .progress-wrap { margin-top: 18px; display: flex; align-items: center; gap: 12px; }
+  .progress-bar { flex: 1; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; max-width: 360px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transition: width 0.4s ease; }
+  .progress-text { font-size: 11px; color: var(--muted); min-width: 44px; }
+
+  .main { display: grid; grid-template-columns: 230px 1fr; min-height: calc(100vh - 220px); }
+
+  .sidebar { border-right: 1px solid var(--border); padding: 20px 0; position: sticky; top: 0; max-height: 100vh; overflow-y: auto; }
+  .sidebar-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); padding: 0 18px; margin-bottom: 6px; }
+  .nav-item { display: flex; align-items: center; justify-content: space-between; padding: 7px 18px; cursor: pointer; border-left: 2px solid transparent; transition: all 0.15s; font-size: 12px; color: var(--muted); gap: 8px; }
+  .nav-item:hover { color: var(--text); background: var(--surface); }
+  .nav-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(255,107,53,0.06); }
+  .nav-count { font-size: 10px; background: var(--surface2); border-radius: 10px; padding: 1px 6px; color: var(--muted); flex-shrink: 0; }
+  .nav-item.active .nav-count { background: rgba(255,107,53,0.15); color: var(--accent); }
+
+  .content { padding: 20px 28px; }
+
+  .toolbar { display: flex; gap: 8px; margin-bottom: 18px; align-items: center; flex-wrap: wrap; }
+  .search-wrap { position: relative; flex: 1; min-width: 180px; }
+  .search-wrap input { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; padding: 9px 14px 9px 36px; font-family: var(--font-mono); font-size: 12px; color: var(--text); outline: none; transition: border-color 0.15s; }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-wrap input::placeholder { color: var(--muted); }
+  .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px; pointer-events: none; }
+  .filter-btn { font-family: var(--font-mono); font-size: 11px; padding: 8px 12px; border-radius: 7px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+  .filter-btn:hover { color: var(--text); border-color: var(--border2); }
+  .filter-btn.active { background: rgba(255,107,53,0.1); color: var(--accent); border-color: rgba(255,107,53,0.3); }
+
+  .section { margin-bottom: 6px; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 9px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; user-select: none; margin-bottom: 2px; transition: border-color 0.15s; }
+  .section-header:hover { border-color: var(--border2); }
+  .section-icon { font-size: 13px; flex-shrink: 0; }
+  .section-title { font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+  .section-bar { width: 56px; height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; flex-shrink: 0; }
+  .section-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transition: width 0.3s; }
+  .section-meta { font-size: 11px; color: var(--muted); flex-shrink: 0; min-width: 32px; text-align: right; }
+  .section-chevron { font-size: 10px; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; }
+  .section.collapsed .section-chevron { transform: rotate(-90deg); }
+  .section.collapsed .problems-list { display: none; }
+
+  .problems-list { margin-bottom: 4px; }
+  .problem-row { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border: 1px solid transparent; border-radius: 6px; cursor: pointer; transition: all 0.1s; margin-bottom: 1px; }
+  .problem-row:hover { background: var(--surface); border-color: var(--border); }
+  .problem-row.done { background: var(--green-dim); }
+
+  .checkbox { width: 16px; height: 16px; border: 1.5px solid var(--border2); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .problem-row.done .checkbox { background: var(--green); border-color: var(--green); }
+  .checkmark { width: 4px; height: 8px; border: 1.5px solid white; border-top: none; border-left: none; transform: rotate(45deg) translate(-0.5px, -1px); display: none; }
+  .problem-row.done .checkmark { display: block; }
+
+  .prob-num { font-size: 10px; color: var(--muted); min-width: 32px; flex-shrink: 0; }
+  .prob-name { font-size: 12px; color: var(--text); flex: 1; text-decoration: none; transition: color 0.1s; }
+  .prob-name:hover { color: var(--accent); }
+  .problem-row.done .prob-name { color: var(--muted); text-decoration: line-through; }
+
+  .tags { display: flex; gap: 4px; flex-shrink: 0; }
+  .tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 500; }
+  .tag.easy { background: rgba(46,204,113,0.12); color: #2ecc71; }
+  .tag.med { background: rgba(243,156,18,0.12); color: #f39c12; }
+  .tag.hard { background: rgba(231,76,60,0.12); color: #e74c3c; }
+  .tag.hot { background: rgba(233,30,140,0.1); color: #e91e8c; }
+
+  .empty { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 12px; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+
+  @media (max-width: 700px) {
+    .main { grid-template-columns: 1fr; }
+    .sidebar { position: static; border-right: none; border-bottom: 1px solid var(--border); }
+    .header { padding: 24px 16px 20px; }
+    .content { padding: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-box">A</div>
+    <div>
+      <h1>Amazon Prep <span>2026</span></h1>
+      <div class="subtitle" id="total-subtitle">SDE Intern · Full Problem Set</div>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-n green" id="s-done">0</div><div class="stat-label">Solved</div></div>
+    <div class="stat-card"><div class="stat-n" id="s-left">0</div><div class="stat-label">Remaining</div></div>
+    <div class="stat-card"><div class="stat-n accent" id="s-pct">0%</div><div class="stat-label">Progress</div></div>
+    <div class="stat-card"><div class="stat-n" id="s-total">0</div><div class="stat-label">Total</div></div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    <span class="progress-text" id="prog-text">0 / 0</span>
+  </div>
+</div>
+
+<div class="main">
+  <nav class="sidebar">
+    <div class="sidebar-label">Topics</div>
+    <div id="nav-items"></div>
+  </nav>
+  <div class="content">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="search" placeholder="Search problems..." oninput="render()" />
+      </div>
+      <button class="filter-btn active" id="btn-all"      onclick="setDiff('all')">All</button>
+      <button class="filter-btn"        id="btn-easy"     onclick="setDiff('easy')">Easy</button>
+      <button class="filter-btn"        id="btn-med"      onclick="setDiff('med')">Med</button>
+      <button class="filter-btn"        id="btn-hard"     onclick="setDiff('hard')">Hard</button>
+      <button class="filter-btn"        id="btn-hot"      onclick="setDiff('hot')">Amazon OA</button>
+      <button class="filter-btn"        id="btn-unsolved" onclick="setDiff('unsolved')">Unsolved</button>
+    </div>
+    <div id="problem-list"></div>
+  </div>
+</div>
+
+<script>
+const KEY = 'amz_intern_full_v1';
+
+const ICONS = {
+  "Arrays / Hashing":"▦","Sliding Window":"◫","Two Pointers":"⇄",
+  "Intervals":"⊟","Stack":"⊞","Binary Search":"⌖",
+  "Heap / Priority Queue":"△","Linked List":"○","Trees":"⋔",
+  "Graphs":"✦","Greedy":"⚡","Backtracking":"↩","DP":"◈"
+};
+
+const problems = [
+  // Arrays / Hashing
+  {topic:"Arrays / Hashing",lc:"1",  name:"Two Sum",                                   diff:"easy",hot:true, pre:true},
+  {topic:"Arrays / Hashing",lc:"217",name:"Contains Duplicate",                         diff:"easy",hot:true, pre:true},
+  {topic:"Arrays / Hashing",lc:"238",name:"Product of Array Except Self",               diff:"med", hot:true, pre:true},
+  {topic:"Arrays / Hashing",lc:"347",name:"Top K Frequent Elements",                   diff:"med", hot:true, pre:true},
+  {topic:"Arrays / Hashing",lc:"128",name:"Longest Consecutive Sequence",              diff:"med", hot:true, pre:true},
+  {topic:"Arrays / Hashing",lc:"49", name:"Group Anagrams",                            diff:"med", hot:true, pre:false},
+  {topic:"Arrays / Hashing",lc:"242",name:"Valid Anagram",                             diff:"easy",hot:false,pre:false},
+  {topic:"Arrays / Hashing",lc:"271",name:"Encode and Decode Strings",                 diff:"med", hot:true, pre:false},
+  // Sliding Window
+  {topic:"Sliding Window",  lc:"121",name:"Best Time to Buy and Sell Stock",           diff:"easy",hot:true, pre:true},
+  {topic:"Sliding Window",  lc:"3",  name:"Longest Substring Without Repeating Characters",diff:"med",hot:true,pre:true},
+  {topic:"Sliding Window",  lc:"567",name:"Permutation in String",                     diff:"med", hot:true, pre:true},
+  {topic:"Sliding Window",  lc:"209",name:"Minimum Size Subarray Sum",                 diff:"med", hot:true, pre:true},
+  {topic:"Sliding Window",  lc:"424",name:"Longest Repeating Character Replacement",   diff:"med", hot:true, pre:false},
+  {topic:"Sliding Window",  lc:"76", name:"Minimum Window Substring",                 diff:"hard",hot:true, pre:false},
+  {topic:"Sliding Window",  lc:"239",name:"Sliding Window Maximum",                   diff:"hard",hot:false,pre:false},
+  // Two Pointers
+  {topic:"Two Pointers",    lc:"125",name:"Valid Palindrome",                          diff:"easy",hot:true, pre:true},
+  {topic:"Two Pointers",    lc:"15", name:"3Sum",                                      diff:"med", hot:true, pre:true},
+  {topic:"Two Pointers",    lc:"11", name:"Container With Most Water",                 diff:"med", hot:true, pre:true},
+  {topic:"Two Pointers",    lc:"42", name:"Trapping Rain Water",                       diff:"hard",hot:true, pre:false},
+  {topic:"Two Pointers",    lc:"26", name:"Remove Duplicates from Sorted Array",       diff:"easy",hot:false,pre:false},
+  // Intervals
+  {topic:"Intervals",       lc:"56", name:"Merge Intervals",                           diff:"med", hot:true, pre:true},
+  {topic:"Intervals",       lc:"57", name:"Insert Interval",                           diff:"med", hot:true, pre:true},
+  {topic:"Intervals",       lc:"252",name:"Meeting Rooms I",                           diff:"easy",hot:true, pre:true},
+  {topic:"Intervals",       lc:"253",name:"Meeting Rooms II",                          diff:"med", hot:true, pre:true},
+  {topic:"Intervals",       lc:"435",name:"Non-Overlapping Intervals",                 diff:"med", hot:true, pre:false},
+  // Stack
+  {topic:"Stack",           lc:"20", name:"Valid Parentheses",                         diff:"easy",hot:true, pre:true},
+  {topic:"Stack",           lc:"739",name:"Daily Temperatures",                        diff:"med", hot:true, pre:true},
+  {topic:"Stack",           lc:"150",name:"Evaluate Reverse Polish Notation",          diff:"med", hot:true, pre:false},
+  {topic:"Stack",           lc:"155",name:"Min Stack",                                 diff:"med", hot:true, pre:false},
+  {topic:"Stack",           lc:"84", name:"Largest Rectangle in Histogram",            diff:"hard",hot:true, pre:false},
+  {topic:"Stack",           lc:"853",name:"Car Fleet",                                 diff:"med", hot:false,pre:false},
+  // Binary Search
+  {topic:"Binary Search",   lc:"704",name:"Binary Search",                             diff:"easy",hot:false,pre:false},
+  {topic:"Binary Search",   lc:"33", name:"Search in Rotated Sorted Array",            diff:"med", hot:true, pre:false},
+  {topic:"Binary Search",   lc:"875",name:"Koko Eating Bananas",                       diff:"med", hot:true, pre:false},
+  {topic:"Binary Search",   lc:"153",name:"Find Minimum in Rotated Sorted Array",      diff:"med", hot:true, pre:false},
+  {topic:"Binary Search",   lc:"981",name:"Time Based Key-Value Store",                diff:"med", hot:true, pre:false},
+  {topic:"Binary Search",   lc:"4",  name:"Median of Two Sorted Arrays",              diff:"hard",hot:false,pre:false},
+  // Heap
+  {topic:"Heap / Priority Queue",lc:"215",name:"Kth Largest Element in an Array",     diff:"med", hot:true, pre:false},
+  {topic:"Heap / Priority Queue",lc:"973",name:"K Closest Points to Origin",          diff:"med", hot:true, pre:false},
+  {topic:"Heap / Priority Queue",lc:"621",name:"Task Scheduler",                      diff:"med", hot:true, pre:false},
+  {topic:"Heap / Priority Queue",lc:"295",name:"Find Median from Data Stream",        diff:"hard",hot:true, pre:false},
+  {topic:"Heap / Priority Queue",lc:"767",name:"Reorganize String",                   diff:"med", hot:true, pre:false},
+  {topic:"Heap / Priority Queue",lc:"355",name:"Design Twitter (Top 10 Tweets)",      diff:"med", hot:true, pre:false},
+  {topic:"Heap / Priority Queue",lc:"632",name:"Smallest Range Covering K Lists",     diff:"hard",hot:false,pre:false},
+  // Linked List
+  {topic:"Linked List",     lc:"206",name:"Reverse Linked List",                      diff:"easy",hot:true, pre:false},
+  {topic:"Linked List",     lc:"141",name:"Linked List Cycle",                        diff:"easy",hot:true, pre:false},
+  {topic:"Linked List",     lc:"21", name:"Merge Two Sorted Lists",                   diff:"easy",hot:true, pre:false},
+  {topic:"Linked List",     lc:"19", name:"Remove Nth Node From End",                 diff:"med", hot:true, pre:false},
+  {topic:"Linked List",     lc:"143",name:"Reorder List",                             diff:"med", hot:true, pre:false},
+  {topic:"Linked List",     lc:"146",name:"LRU Cache",                                diff:"med", hot:true, pre:false},
+  // Trees
+  {topic:"Trees",           lc:"104",name:"Maximum Depth of Binary Tree",             diff:"easy",hot:true, pre:false},
+  {topic:"Trees",           lc:"102",name:"Binary Tree Level Order Traversal",        diff:"med", hot:true, pre:false},
+  {topic:"Trees",           lc:"98", name:"Validate Binary Search Tree",              diff:"med", hot:true, pre:false},
+  {topic:"Trees",           lc:"235",name:"Lowest Common Ancestor of BST",            diff:"med", hot:true, pre:false},
+  {topic:"Trees",           lc:"199",name:"Binary Tree Right Side View",              diff:"med", hot:true, pre:false},
+  {topic:"Trees",           lc:"1448",name:"Count Good Nodes in Binary Tree",         diff:"med", hot:false,pre:false},
+  {topic:"Trees",           lc:"230",name:"Kth Smallest Element in BST",              diff:"med", hot:true, pre:false},
+  {topic:"Trees",           lc:"105",name:"Construct Binary Tree from Preorder+Inorder",diff:"med",hot:false,pre:false},
+  // Graphs
+  {topic:"Graphs",          lc:"200",name:"Number of Islands",                        diff:"med", hot:true, pre:false},
+  {topic:"Graphs",          lc:"133",name:"Clone Graph",                              diff:"med", hot:true, pre:false},
+  {topic:"Graphs",          lc:"207",name:"Course Schedule",                          diff:"med", hot:true, pre:false},
+  {topic:"Graphs",          lc:"417",name:"Pacific Atlantic Water Flow",              diff:"med", hot:true, pre:false},
+  {topic:"Graphs",          lc:"994",name:"Rotting Oranges",                          diff:"med", hot:true, pre:false},
+  {topic:"Graphs",          lc:"127",name:"Word Ladder",                              diff:"hard",hot:true, pre:false},
+  // Greedy
+  {topic:"Greedy",          lc:"55", name:"Jump Game",                                diff:"med", hot:true, pre:false},
+  {topic:"Greedy",          lc:"134",name:"Gas Station",                              diff:"med", hot:true, pre:false},
+  {topic:"Greedy",          lc:"45", name:"Jump Game II",                             diff:"med", hot:true, pre:false},
+  {topic:"Greedy",          lc:"846",name:"Hand of Straights",                        diff:"med", hot:false,pre:false},
+  // Backtracking
+  {topic:"Backtracking",    lc:"78", name:"Subsets",                                  diff:"med", hot:true, pre:false},
+  {topic:"Backtracking",    lc:"39", name:"Combination Sum",                          diff:"med", hot:true, pre:false},
+  {topic:"Backtracking",    lc:"79", name:"Word Search",                              diff:"med", hot:true, pre:false},
+  {topic:"Backtracking",    lc:"46", name:"Permutations",                             diff:"med", hot:true, pre:false},
+  {topic:"Backtracking",    lc:"17", name:"Letter Combinations of a Phone Number",    diff:"med", hot:true, pre:false},
+  // DP
+  {topic:"DP",              lc:"70", name:"Climbing Stairs",                          diff:"easy",hot:true, pre:false},
+  {topic:"DP",              lc:"198",name:"House Robber",                             diff:"med", hot:true, pre:false},
+  {topic:"DP",              lc:"322",name:"Coin Change",                              diff:"med", hot:true, pre:false},
+  {topic:"DP",              lc:"300",name:"Longest Increasing Subsequence",           diff:"med", hot:true, pre:false},
+];
+
+const TOTAL = problems.length;
+const topics = ["All", ...new Set(problems.map(p => p.topic))];
+
+// seed pre-solved on first visit
+let done;
+const stored = localStorage.getItem(KEY);
+if (stored === null) {
+  done = new Set(problems.filter(p => p.pre).map(p => p.lc));
+  save();
+} else {
+  done = new Set(JSON.parse(stored));
+}
+
+let activeFilter = 'All';
+let diffFilter = 'all';
+
+function save() { localStorage.setItem(KEY, JSON.stringify([...done])); }
+
+function updateStats() {
+  const d = done.size, t = TOTAL, pct = Math.round(d / t * 100);
+  document.getElementById('s-done').textContent = d;
+  document.getElementById('s-left').textContent = t - d;
+  document.getElementById('s-pct').textContent = pct + '%';
+  document.getElementById('s-total').textContent = t;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = d + ' / ' + t;
+  document.getElementById('total-subtitle').textContent = 'SDE Intern · Full Problem Set · ' + t + ' problems';
+}
+
+function toggle(lc) {
+  done.has(lc) ? done.delete(lc) : done.add(lc);
+  save(); updateStats(); render();
+}
+
+function renderNav() {
+  document.getElementById('nav-items').innerHTML = topics.map(t => {
+    const probs = t === 'All' ? problems : problems.filter(p => p.topic === t);
+    const s = probs.filter(p => done.has(p.lc)).length;
+    return `<div class="nav-item${t === activeFilter ? ' active' : ''}" onclick="setFilter('${t}')">
+      <span>${(ICONS[t]||'')} ${t}</span>
+      <span class="nav-count">${s}/${probs.length}</span>
+    </div>`;
+  }).join('');
+}
+
+function setFilter(t) { activeFilter = t; renderNav(); render(); }
+
+function setDiff(f) {
+  diffFilter = f;
+  ['all','easy','med','hard','hot','unsolved'].forEach(id => {
+    const el = document.getElementById('btn-' + id);
+    if (el) el.classList.toggle('active', id === f);
+  });
+  render();
+}
+
+function render() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const filtered = problems.filter(p => {
+    if (activeFilter !== 'All' && p.topic !== activeFilter) return false;
+    if (q && !p.name.toLowerCase().includes(q) && !p.topic.toLowerCase().includes(q) && !p.lc.includes(q)) return false;
+    if (diffFilter === 'easy')     return p.diff === 'easy';
+    if (diffFilter === 'med')      return p.diff === 'med';
+    if (diffFilter === 'hard')     return p.diff === 'hard';
+    if (diffFilter === 'hot')      return p.hot;
+    if (diffFilter === 'unsolved') return !done.has(p.lc);
+    return true;
+  });
+
+  const byTopic = {};
+  filtered.forEach(p => { (byTopic[p.topic] = byTopic[p.topic] || []).push(p); });
+
+  const el = document.getElementById('problem-list');
+  if (!filtered.length) { el.innerHTML = '<div class="empty">No problems found.</div>'; return; }
+
+  el.innerHTML = Object.entries(byTopic).map(([topic, probs]) => {
+    const s = probs.filter(p => done.has(p.lc)).length;
+    const pct = Math.round(s / probs.length * 100);
+    const sid = 'sec-' + topic.replace(/[\s\/]/g, '-');
+    return `<div class="section" id="${sid}">
+      <div class="section-header" onclick="toggleSec('${sid}')">
+        <span class="section-icon">${ICONS[topic]||'•'}</span>
+        <span class="section-title">${topic}</span>
+        <div class="section-bar"><div class="section-bar-fill" style="width:${pct}%"></div></div>
+        <span class="section-meta">${s}/${probs.length}</span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="problems-list">
+        ${probs.map(p => `
+          <div class="problem-row${done.has(p.lc)?' done':''}" onclick="toggle('${p.lc}')">
+            <div class="checkbox"><div class="checkmark"></div></div>
+            <span class="prob-num">#${p.lc}</span>
+            <a class="prob-name" href="https://leetcode.com/problems/" target="_blank" onclick="event.stopPropagation()">${p.name}</a>
+            <div class="tags">
+              ${p.hot?'<span class="tag hot">OA</span>':''}
+              <span class="tag ${p.diff}">${p.diff}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  renderNav();
+}
+
+function toggleSec(id) {
+  const s = document.getElementById(id);
+  if (s) s.classList.toggle('collapsed');
+}
+
+render();
+updateStats();
+</script>
+</body>
+</html>
