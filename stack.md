@@ -3,7 +3,7 @@
 
 Important for OA.
 
-LeetCode Valid Parentheses
+LeetCode Valid Parentheses ✅
 ---
 
 class Solution {
@@ -31,13 +31,42 @@ public:
     }
 };
 
+LeetCode Longest Valid Parentheses ✅
+
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        stack<int> st;
+        st.push(-1);
+
+        int maxlen=0;
+        
+        for(int i=0;i<s.size();i++){
+            if(s[i] == '('){
+                st.push(i);
+            }else{
+                st.pop();
+
+                if(st.empty()){
+                    st.push(i);
+                }else{
+                    maxlen = max(maxlen, i - st.top());
+                }
+            }
+        }
+        return maxlen;
+    }
+};
+
+
 Order(n);
 
-LeetCode Daily Temperatures
+LeetCode Daily Temperatures ✅
 ---
 
 
 
-LeetCode Evaluate Reverse Polish Notation
+
+LeetCode Evaluate Reverse Polish Notation ✅
 ---
 
