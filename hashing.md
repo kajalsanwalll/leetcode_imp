@@ -243,3 +243,33 @@ public:
 };
 
 Order (n klog k);
+
+
+Valid Anagram
+---
+
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        unordered_map<char,int> counter;
+
+        if(s.length() != t.length()){
+            return false;
+        }
+
+        for(char c : s){
+            counter[c]++;
+        }
+
+        for(char c : t){
+            if(counter.find(c) == counter.end() || counter[c]==0){
+                return false;
+            }
+            counter[c]--;
+        }
+        return true;
+    }
+};
+
+Order(n);
