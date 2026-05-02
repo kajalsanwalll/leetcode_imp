@@ -323,3 +323,35 @@ public:
     }
 };
 
+Missing and Repeated value
+---
+
+class Solution {
+public:
+    vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
+        int n = grid.size();
+        unordered_map<int,int> freq;
+
+        int repeated = -1, missing = -1;
+
+        // Count frequency
+        for(auto &row : grid){
+            for(int num : row){
+                freq[num]++;
+            }
+        }
+
+        // Check from 1 to n^2
+        for(int i = 1; i <= n*n; i++){
+            if(freq[i] == 2){
+                repeated = i;
+            }
+            if(freq[i] == 0){
+                missing = i;
+            }
+        }
+
+        return {repeated, missing};
+    }
+};
+
