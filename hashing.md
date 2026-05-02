@@ -273,3 +273,54 @@ public:
 };
 
 Order(n);
+
+
+Encode and decode string
+---
+
+
+class Codec {
+public:
+
+    // Encodes a list of strings to a single string.
+    string encode(vector<string>& strs) {
+        string res = "";
+
+        for (string s : strs) {
+            res += to_string(s.size()) + "#" + s;
+        }
+
+        return res;
+    }
+
+    // Decodes a single string to a list of strings.
+    vector<string> decode(string s) {
+        vector<string> res;
+        int i = 0;
+
+        while (i < s.size()) {
+            int j = i;
+
+            // find '#'
+            while (s[j] != '#') {
+                j++;
+            }
+
+            // length of string
+            int len = stoi(s.substr(i, j - i));
+
+            // move to start of actual string
+            j++;
+
+            // extract string
+            string word = s.substr(j, len);
+            res.push_back(word);
+
+            // move i to next segment
+            i = j + len;
+        }
+
+        return res;
+    }
+};
+
