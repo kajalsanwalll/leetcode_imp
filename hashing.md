@@ -220,7 +220,7 @@ public:
 
 order(n) using unordered set
 
-Group Anagrams
+Group Anagrams ✅
 ---
 
 class Solution {
@@ -245,7 +245,7 @@ public:
 Order (n klog k);
 
 
-Valid Anagram
+Valid Anagram ✅
 ---
 
 
@@ -275,9 +275,8 @@ public:
 Order(n);
 
 
-Encode and decode string
+Encode and decode string ✅
 ---
-
 
 class Codec {
 public:
@@ -289,7 +288,7 @@ public:
         for (string s : strs) {
             res += to_string(s.size()) + "#" + s;
         }
-
+        
         return res;
     }
 
