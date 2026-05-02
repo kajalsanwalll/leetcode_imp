@@ -39,6 +39,30 @@ Order(n);
 LeetCode K Closest Points to Origin
 ---
 
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+        priority_queue<pair<int,vector<int>>> pq;
+
+        for(auto& c : points){
+            int dist = c[0]*c[0] + c[1]*c[1];
+            pq.push({dist,c});
+
+            if(pq.size()>k){
+                pq.pop();
+            }
+        }
+
+        vector<vector<int>> ans;
+        while(!pq.empty()){
+            ans.push_back(pq.top().second);
+            pq.pop();
+        }
+        return ans;
+    }
+};
+
+Order (n log k);
 
 LeetCode Task Scheduler
 LeetCode Find Median from Data Stream
