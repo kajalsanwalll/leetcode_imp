@@ -3,6 +3,32 @@
 
 Very common in OA.
 
+"""
+A generic template for dynamic sliding window finding max window length
+"""
+def longest_window(nums, condition):
+    i = 0
+    max_length = 0
+    result = None
+
+    for j in range(len(nums)):
+        # Expand the window
+        # Add nums[j] to the current window logic
+
+        # Shrink the window if the condition is violated
+        while not condition():  
+            # Shrink the window from the left
+            # Remove nums[i] from the current window logic
+            i += 1
+
+        # Update the result if the current window is larger
+        if j - i + 1 > max_length:
+            max_length = j - i + 1
+            # Add business logic to update result
+
+    return result
+
+
 Maximum Sum of Subarray of Size K ✅
 ---
 
@@ -173,6 +199,31 @@ public:
 };
 
 Order(n log n);
+
+
+Longest repeating character replacement
+---
+
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        unordered_map<char,int> sey;
+        int maxFreq=0; int i=0; int res=0;
+
+        for(int j=0; j<s.size();j++){
+            sey[s[j]]++;
+            maxFreq = max(maxFreq,sey[s[j]]);
+
+            while((j- i + 1) - maxFreq > k){
+                sey[s[i]]--;
+                i++;
+            }
+            res = max(res, j-i+1);
+
+        }
+        return res;
+    }
+};
 
 
 
