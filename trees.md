@@ -3,6 +3,23 @@
 
 Very likely interview topic.
 
+Inorder Traversal Skeleton
+---
+
+while (root != NULL || !stack.empty()) {
+    while (root != NULL) {
+        stack.push(root);
+        root = root->left;
+    }
+
+    root = stack.top();
+    stack.pop();
+
+    //  DO SOMETHING HERE
+
+    root = root->right;
+}
+
 LeetCode Maximum Depth of Binary Tree
 ---
 
