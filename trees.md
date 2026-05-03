@@ -74,7 +74,32 @@ Order(n);
 LeetCode Validate Binary Search Tree
 ----
 
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        stack<TreeNode*> st;
+        TreeNode* prev = NULL;
 
+        while (root != NULL || !st.empty()) {
+            while (root != NULL) {
+                st.push(root);
+                root = root->left;
+            }
+
+            root = st.top();
+            st.pop();
+
+            if (prev != NULL && root->val <= prev->val)
+                return false;
+
+            prev = root;
+
+            root = root->right;
+        }
+
+        return true;
+    }
+};
 
 
 LeetCode Lowest Common Ancestor of BST
