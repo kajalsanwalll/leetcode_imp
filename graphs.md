@@ -44,4 +44,26 @@ public:
 };
 
 LeetCode Clone Graph
+---
+
+class Solution {
+public:
+    unordered_map<Node*,Node*> mp;
+    Node* cloneGraph(Node* node) {
+       if(!node){
+        return NULL;
+       }
+
+       if(mp.count(node)) return mp[node]; //already cloned
+
+       Node* clone = new Node(node->val);
+       mp[node] = clone;
+
+       for(Node* n : node->neighbors){
+         clone->neighbors.push_back(cloneGraph(n));
+       }
+       return clone;
+    }
+};
+
 LeetCode Course Schedule
