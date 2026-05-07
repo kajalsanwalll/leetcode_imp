@@ -36,4 +36,5 @@ vector<vector<int>> ans;
     }
 };
 
-Order(2^target);
+Order(2^target); time
+Order(target); space
