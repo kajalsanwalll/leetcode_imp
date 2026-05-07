@@ -6,7 +6,32 @@ At least these.
 LeetCode Subsets
 ---
 
+class Solution {
+public:
+    vector<vector<int>> ans;
+    void sol(int index,vector<int>&nums, vector<int>& temp){
+        
+        if(index>= nums.size()){
+            ans.push_back(temp);
+            return;
+        }
+        temp.push_back(nums[index]);
+        sol(index+1,nums,temp);
+        temp.pop_back();
+        sol(index+1,nums,temp);
+    }
 
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<int> temp;
+        sol(0,nums,temp);
+        return ans;
+
+
+    }
+};
+
+TIME O(2^n *n);
+space O(n);
 
 LeetCode Combination Sum
 ---
