@@ -65,6 +65,34 @@ public:
 Order (n log k);
 
 LeetCode Task Scheduler
+
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        vector<int> freq(26,0);
+
+        for(char c : tasks){
+            freq[c-'A']++;
+        }
+
+        int mx = *max_element(freq.begin(),freq.end());
+
+        int cnt=0;
+
+        for(int f : freq){
+            if(f == mx){
+                cnt++;
+            }
+        }
+        return max((int)tasks.size(), (mx -1)* (n+1) + cnt);
+
+    }
+};
+
+Time Order(n);
+Space Order(1); 
+
+
 LeetCode Find Median from Data Stream
 
 Amazon really likes heaps.
