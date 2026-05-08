@@ -65,6 +65,9 @@ public:
 Order (n log k);
 
 LeetCode Task Scheduler
+---
+
+APPROACH 1
 
 class Solution {
 public:
@@ -92,6 +95,69 @@ public:
 Time Order(n);
 Space Order(1); 
 
+
+APPROACH2 
+
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+
+        vector<int> freq(26, 0);
+
+        for(char c : tasks) {
+            freq[c - 'A']++;
+        }
+
+        priority_queue<int> pq;
+
+        for(int f : freq) {
+            if(f > 0) {
+                pq.push(f);
+            }
+        }
+
+        int time = 0;
+
+        while(!pq.empty()) {
+
+            vector<int> temp;
+
+            int cycle = n + 1;
+
+            // process one block
+            while(cycle > 0 && !pq.empty()) {
+
+                int cnt = pq.top();
+                pq.pop();
+
+                cnt--;
+
+                if(cnt > 0) {
+                    temp.push_back(cnt);
+                }
+
+                time++;
+                cycle--;
+            }
+
+            // push remaining tasks back
+            for(int x : temp) {
+                pq.push(x);
+            }
+
+            // if heap empty -> no idle needed
+            if(pq.empty()) break;
+
+            // otherwise add idle slots
+            time += cycle;
+        }
+
+        return time;
+    }
+};
+
+Order( n); time
+order(1); space
 
 LeetCode Find Median from Data Stream
 
