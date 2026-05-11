@@ -340,7 +340,6 @@ public:
                 freq[num]++;
             }
         }
-
         // Check from 1 to n^2
         for(int i = 1; i <= n*n; i++){
             if(freq[i] == 2){
