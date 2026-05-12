@@ -226,6 +226,58 @@ public:
 };
 
 
+Minimum Window Substring
+---
+
+APPROACH 1 (Order(n));
+
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        unordered_map<char,int> need;
+        unordered_map<char,int> window;
+
+        for(char c : t){
+            need[c]++;
+        }
+
+        int have = 0;
+        int needCount = need.size();
+        int left =0;
+        int minLen = INT_MAX;
+        int start =0;
+
+        for(int right =0; right< s.size(); right++){
+            char c = s[right];
+            window[c]++;
+
+            if(need.count(c) && window[c] == need[c]){
+                have++;
+            }
+
+            while(have == needCount){
+                if((right-left+1) < minLen){
+                    minLen = right-left+1;
+                    start = left;
+                }
+                window[s[left]]--;
+
+                if(need.count(s[left]) && window[s[left]] < need[s[left]]){
+                    have--;
+                }
+                left++;
+            }
+        }
+        if(minLen == INT_MAX)return "";
+        return s.substr(start,minLen);
+    }
+};
+
+APPROACH 2 (order(m+n));
+
+
+
+
 
 Why:
 Amazon OA frequently asks window + hashmap.
