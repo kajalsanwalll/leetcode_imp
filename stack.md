@@ -163,6 +163,8 @@ O(1);
 Largest Rectangle in Histogram
 ---
 
+basically push in stack jab tak height is taller, pop when height is shorter
+
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
