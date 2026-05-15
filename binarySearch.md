@@ -161,3 +161,7 @@ public:
         return ans;
     }
 };
+
+
+Order(log n); time
+Order(1); space
