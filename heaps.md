@@ -203,4 +203,56 @@ time O(log n);
 space O(1);
 
 
+Reorganize String
+---
+
+class Solution {
+public:
+    string reorganizeString(string s) {
+        int n = s.size();
+        unordered_map<char,int> freq;
+        for(char c : s){
+            freq[c]++;
+        }
+        for(auto x : freq){
+            if(x.second > (n+1)/2){
+                return "";
+            }
+        }
+        priority_queue<pair<int,char>> pq;
+        for(auto c : freq){
+            pq.push({c.second,c.first});
+        }
+        string ans = "";
+
+        while(pq.size() >= 2){
+            auto one = pq.top();
+            pq.pop();
+
+            auto two = pq.top();
+            pq.pop();
+
+            ans+= one.second;
+            ans+= two.second;
+
+            one.first--;
+            two.first--;
+
+            if(one.first > 0){
+                pq.push(one);
+            }
+            if(two.first > 0){
+                pq.push(two);
+            }
+        }
+        if(!pq.empty()){
+            ans+= pq.top().second;
+        }
+        return ans;
+    }
+};
+
+time O(n);
+space O(1);
+
 Amazon really likes heaps.
