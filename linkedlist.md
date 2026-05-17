@@ -106,3 +106,52 @@ public:
         return dummy->next;
     }
 };
+
+
+Reorder List
+---
+
+
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        
+        if(!head || !(head->next)) return;
+
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        //finding mid element - when fast stops, slow is on mid ele
+        while(fast->next && fast->next->next){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        //reverse second part
+        ListNode* second = slow->next;
+        slow->next =NULL;
+        ListNode* prev = NULL;
+
+        while(second){
+            ListNode* nextNode = second->next;
+            second->next = prev;
+            prev = second;
+            second = nextNode;
+        }
+
+        //merge
+        second = prev;
+        ListNode* first = head;
+
+        while(second){
+            ListNode* temp1 = first->next;
+            ListNode* temp2 = second->next;
+
+            first->next = second;
+            second->next = temp1;
+
+            first = temp1;
+            second = temp2;
+        }
+    }
+};
