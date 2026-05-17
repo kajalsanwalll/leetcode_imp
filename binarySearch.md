@@ -169,8 +169,6 @@ Order(1); space
 
 Median of two sorted arrays
 ---
-
-
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
@@ -179,7 +177,7 @@ public:
             return findMedianSortedArrays(nums2,nums1);
         }
         int k = m+n;
-        int left = (m+n+1)/2;
+        int left = (m+n+1)/2; 
         int low = 0, high = m;
 
         while(low<=high){
@@ -200,9 +198,11 @@ public:
                 else{
                     return ((double)(max(l1,l2) + min(r1,r2)))/2.0;
                 }
-            }else if(l1 > r2){
+            }
+            else if(l1 > r2){
                 high = mid1 - 1;
-            }else{
+            }
+            else{
                 low = mid1+1;
             }
         }
