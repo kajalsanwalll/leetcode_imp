@@ -190,3 +190,36 @@ time O(n);
 space O(height);
 
 
+Kth smallest element in BST
+---
+
+class Solution {
+public:
+    int ans = 0;
+    int count = 0;
+
+    void inorder(TreeNode* root, int k){
+        if(root == NULL) return;
+
+        inorder(root->left,k);
+        count++;
+
+        if(count == k){
+            ans = root->val;
+            return;
+        }
+
+        inorder(root->right,k);
+    }
+
+    int kthSmallest(TreeNode* root, int k) {
+        inorder(root, k);
+
+        return ans;
+    }
+};
+
+time : O(n);
+space O(height);
+
+
