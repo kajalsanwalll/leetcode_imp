@@ -159,3 +159,34 @@ public:
 Order(n); time and space
 
 
+Count good nodes in binary tree
+---
+
+
+class Solution {
+public:
+
+    int dfs(TreeNode* root, int maxSoFar){
+        if(root == NULL) return 0; 
+        int good = 0;
+
+        if(root->val >= maxSoFar){
+            good = 1;
+        }
+
+        maxSoFar = max(maxSoFar, root->val);
+
+        return good 
+          +dfs(root->left,maxSoFar)
+          +dfs(root->right,maxSoFar);
+        
+    }
+    int goodNodes(TreeNode* root) {
+        return dfs(root, root->val);
+    }
+};
+
+time O(n);
+space O(height);
+
+
