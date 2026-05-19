@@ -43,3 +43,23 @@ public:
         return curr;
     }
 };
+
+
+House Robber
+---
+
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        
+        int sum1=0,sum2=0;
+
+        for(int num : nums){
+            
+            int ans = max(num+sum2,sum1);
+            sum2 = sum1;
+            sum1 = ans;
+        }
+        return sum1;
+    }
+};
