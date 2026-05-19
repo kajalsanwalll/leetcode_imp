@@ -72,3 +72,38 @@ public:
         return jumps;
     }
 };
+
+
+Hand of Straights
+---
+
+class Solution {
+public:
+    bool isNStraightHand(vector<int>& hand, int groupSize) {
+        int n = hand.size();
+
+        if(n%groupSize != 0) return false;
+
+        map<int,int> mp;
+        for(int x : hand){
+            mp[x]++;
+        }
+
+        for(auto &[card,freq] : mp){
+            int count = freq;
+
+            if(freq > 0){
+
+                for(int i=0 ; i< groupSize; i++){
+                    int curr = card + i;
+
+                    if(mp.find(curr) == mp.end() || mp[curr] < count){
+                        return false;
+                    }
+                    mp[curr]-= count;
+                }
+            }
+        }
+        return true;
+    }
+};
