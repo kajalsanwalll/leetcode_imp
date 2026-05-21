@@ -116,3 +116,24 @@ Time Complexity
 O(n²)
 Space Complexity
 O(n)
+
+
+APPROACH 2 : O(n log n) time;
+
+
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> ans;
+        for(int num : nums){
+            auto i = lower_bound(ans.begin(),ans.end(),num);
+
+            if(i==ans.end()){
+                ans.push_back(num);
+            }else{
+                *i = num;
+            }
+        }
+        return ans.size();
+    }
+};
