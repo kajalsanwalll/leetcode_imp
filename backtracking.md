@@ -180,3 +180,38 @@ public:
         return false;
     }
 };
+
+
+Letter Combinations of a Phone Number
+---
+
+class Solution {
+public:
+
+    void backtrack(int index, string& digits, vector<string>& mapping,string& current, vector<string>& result){
+        if(index == digits.size()){
+            result.push_back(current);
+            return;
+        }
+        string letters = mapping[digits[index] - '0'];
+
+        for(auto c : letters){
+            current.push_back(c);
+            backtrack(index+1,digits,mapping,current,result);
+            current.pop_back();
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        if(digits.empty()) return {};
+
+        vector<string> mapping = {
+            "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
+        };
+
+        vector<string> result;
+        string current;
+        backtrack(0,digits,mapping,current,result);
+
+        return result;
+    }
+};
