@@ -391,4 +391,12 @@ public:
     }
 };
 
+hint: basically always keep 1 element from each list and keep a track of range {max,min} and keep popping out the minimum digit and replace it with another digit from same list.
+
+Each push/pop:
+O(log k)
+
+total time : O(n log k)
+total space: O(k)
+
 Amazon really likes heaps.
