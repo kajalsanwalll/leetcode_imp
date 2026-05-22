@@ -157,6 +157,10 @@ public:
 };
 
 
+Time O(n);
+Space O(1);
+
+
 Remove Nth node from the end of list
 ---
 
