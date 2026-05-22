@@ -255,4 +255,96 @@ public:
 time O(n);
 space O(1);
 
+
+Design Twitter
+---
+
+
+class Twitter {
+public:
+
+    int timer = 0;
+
+    // follower -> followees
+    unordered_map<int, unordered_set<int>> followMap;
+
+    // user -> {time, tweetId}
+    unordered_map<int, vector<pair<int,int>>> tweetMap;
+
+    Twitter() {
+    }
+    
+    void postTweet(int userId, int tweetId) {
+
+        tweetMap[userId].push_back({timer++, tweetId});
+    }
+    
+    vector<int> getNewsFeed(int userId) {
+
+        vector<int> feed;
+
+        // user should follow themselves
+        followMap[userId].insert(userId);
+
+        priority_queue<vector<int>> pq;
+
+        // push latest tweet of every followee
+        for(int followee : followMap[userId]){
+
+            auto &tweets = tweetMap[followee];
+
+            if(tweets.size() > 0){
+
+                int idx = tweets.size() - 1;
+
+                pq.push({
+                    tweets[idx].first,   // timestamp
+                    tweets[idx].second,  // tweetId
+                    followee,
+                    idx
+                });
+            }
+        }
+
+        while(!pq.empty() && feed.size() < 10){
+
+            auto top = pq.top();
+            pq.pop();
+
+            int time = top[0];
+            int tweetId = top[1];
+            int followee = top[2];
+            int idx = top[3];
+
+            feed.push_back(tweetId);
+
+            // push older tweet
+            if(idx > 0){
+
+                pq.push({
+                    tweetMap[followee][idx-1].first,
+                    tweetMap[followee][idx-1].second,
+                    followee,
+                    idx-1
+                });
+            }
+        }
+
+        return feed;
+    }
+    
+    void follow(int followerId, int followeeId) {
+
+        followMap[followerId].insert(followeeId);
+    }
+    
+    void unfollow(int followerId, int followeeId) {
+
+        if(followerId != followeeId){
+            followMap[followerId].erase(followeeId);
+        }
+    }
+};
+
+
 Amazon really likes heaps.
