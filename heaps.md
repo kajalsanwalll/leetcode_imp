@@ -347,4 +347,48 @@ public:
 };
 
 
+Smallest range covering elements from K lists
+---
+
+class Solution {
+public:
+    vector<int> smallestRange(vector<vector<int>>& nums) {
+        priority_queue<vector<int>,vector<vector<int>>,greater<vector<int>>> pq;
+
+        int currMax = INT_MIN;
+        int k = nums.size();
+        for(int i=0; i<k ; i++){
+
+            pq.push({nums[i][0], i, 0});
+            currMax = max(currMax, nums[i][0]);
+        }
+        
+        int start = 0;
+        int end = INT_MAX;
+        
+        while(pq.size() == k){
+
+            auto top = pq.top();
+            pq.pop();
+
+            int currMin = top[0];
+            int row = top[1];
+            int col = top[2];
+
+            if(currMax - currMin < end - start){
+                start = currMin;
+                end = currMax;
+            }
+
+            if(col + 1 < nums[row].size()){
+
+                int nextVal = nums[row][col + 1];
+                pq.push({nextVal, row, col + 1});
+                currMax = max(currMax, nextVal); 
+            }
+        }
+        return {start, end};
+    }
+};
+
 Amazon really likes heaps.
