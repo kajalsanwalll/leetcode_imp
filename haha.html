@@ -3,670 +3,1128 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Amazon SDE Prep 2026</title>
+<title>Ultimate SDE Interview Prep Tracker</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
 :root{
   --bg:#06060a;
-  --s1:#0d0d14;
-  --s2:#12121c;
-  --s3:#181826;
-  --border:rgba(255,255,255,0.07);
-  --border2:rgba(255,255,255,0.13);
-  --text:#eeeef5;
-  --muted:#6b6b88;
-  --muted2:#9898b0;
+  --surface:#0e0e15;
+  --surface2:#151520;
+  --surface3:#1b1b2a;
+
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(255,255,255,0.14);
+
+  --text:#f2f2f7;
+  --muted:#8f8fa7;
+
   --accent:#ff9900;
   --accent2:#ffb84d;
-  --accent3:#ff6600;
   --green:#22d46e;
-  --green-dim:rgba(34,212,110,0.09);
-  --red:#ff4d4d;
+  --red:#ff5d73;
   --blue:#60a5fa;
   --pink:#f472b6;
-  --yellow:#fbbf24;
+  --purple:#a78bfa;
+
   --display:'Space Grotesk',sans-serif;
   --mono:'JetBrains Mono',monospace;
-  --r:12px;
-  --r2:16px;
+
+  --radius:16px;
 }
+
 body{
   background:var(--bg);
   color:var(--text);
   font-family:var(--mono);
-  min-height:100vh;
   overflow-x:hidden;
 }
 
-/* ─── NOISE LAYER ─── */
+/* background glow */
 body::before{
   content:'';
   position:fixed;
   inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events:none;
-  z-index:0;
-}
-
-/* ─── HEADER ─── */
-.hdr{
-  position:relative;
-  padding:40px 48px 32px;
-  border-bottom:1px solid var(--border);
-  overflow:hidden;
-  z-index:1;
-}
-.hdr-glow{
-  position:absolute;
-  width:600px;height:600px;
-  background:radial-gradient(circle,rgba(255,153,0,0.07) 0%,transparent 65%);
-  top:-300px;right:-150px;
+  background:
+  radial-gradient(circle at top right, rgba(255,153,0,0.08), transparent 25%),
+  radial-gradient(circle at bottom left, rgba(96,165,250,0.06), transparent 25%);
   pointer-events:none;
 }
-.hdr-glow2{
-  position:absolute;
-  width:400px;height:400px;
-  background:radial-gradient(circle,rgba(255,102,0,0.05) 0%,transparent 65%);
-  bottom:-200px;left:-100px;
-  pointer-events:none;
-}
-.logo-row{display:flex;align-items:center;gap:16px;}
-.logo-icon{
-  width:46px;height:46px;border-radius:10px;
-  background:linear-gradient(135deg,#ff6600,#ff9900,#ffb84d);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--display);font-weight:700;font-size:20px;
-  color:#000;letter-spacing:-1px;
-  box-shadow:0 0 24px rgba(255,153,0,0.25);
-}
-.logo-text h1{
-  font-family:var(--display);font-size:28px;font-weight:700;
-  letter-spacing:-0.5px;
-}
-.logo-text h1 em{color:var(--accent);font-style:normal;}
-.logo-text p{color:var(--muted);font-size:11px;letter-spacing:1.5px;margin-top:2px;font-family:var(--mono);}
 
-/* ─── TODAY BANNER ─── */
-.today-banner{
-  margin:24px 0 0;
-  background:linear-gradient(135deg,rgba(255,153,0,0.1),rgba(255,102,0,0.06));
-  border:1px solid rgba(255,153,0,0.22);
-  border-radius:var(--r2);
-  padding:16px 22px;
-  display:flex;align-items:flex-start;gap:14px;
+/* main wrapper */
+.wrapper{
+  max-width:1450px;
+  margin:auto;
+  padding:32px;
 }
-.today-badge{
-  flex-shrink:0;
-  background:var(--accent);
-  color:#000;
-  font-family:var(--display);
-  font-size:9px;font-weight:700;
-  letter-spacing:1.5px;
-  padding:4px 10px;
-  border-radius:999px;
-  margin-top:2px;
-  text-transform:uppercase;
-  white-space:nowrap;
-}
-.today-content{}
-.today-title{font-family:var(--display);font-size:14px;font-weight:600;color:var(--accent2);margin-bottom:4px;}
-.today-tasks{display:flex;flex-direction:column;gap:3px;}
-.today-item{font-size:12px;color:var(--muted2);display:flex;align-items:center;gap:8px;}
-.today-item::before{content:'→';color:var(--accent);font-size:11px;}
-.today-empty{font-size:12px;color:var(--green);display:flex;align-items:center;gap:8px;}
-.today-empty::before{content:'✓';color:var(--green);}
 
-/* ─── STATS ROW ─── */
-.stats{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;}
-.stat{
-  background:var(--s1);
+/* hero */
+
+.hero{
+  background:linear-gradient(145deg,#0f0f18,#12121f);
   border:1px solid var(--border);
-  border-radius:var(--r);
-  padding:16px 20px;
-  min-width:120px;
+  border-radius:28px;
+  padding:34px;
   position:relative;
   overflow:hidden;
+  margin-bottom:28px;
 }
-.stat::after{
+
+.hero::before{
   content:'';
   position:absolute;
-  bottom:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  opacity:0;
-  transition:opacity 0.3s;
+  width:500px;
+  height:500px;
+  background:radial-gradient(circle, rgba(255,153,0,0.09), transparent 70%);
+  top:-260px;
+  right:-180px;
 }
-.stat:hover::after{opacity:1;}
-.stat-n{font-family:var(--display);font-size:30px;font-weight:700;line-height:1;}
-.stat-n.green{color:var(--green);}
-.stat-n.amber{color:var(--accent);}
-.stat-n.muted{color:var(--muted2);}
-.stat-l{font-size:10px;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin-top:6px;}
-.xp-bar-wrap{margin-top:22px;}
-.xp-bar{height:5px;background:var(--s3);border-radius:999px;overflow:hidden;max-width:560px;}
-.xp-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent3),var(--accent),var(--accent2));border-radius:999px;transition:width 0.5s cubic-bezier(0.4,0,0.2,1);}
-.xp-text{font-size:11px;color:var(--muted);margin-top:8px;}
 
-/* ─── WEEK GRID ─── */
-.container{padding:28px 48px 60px;position:relative;z-index:1;}
+.hero-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+  flex-wrap:wrap;
+}
 
-/* ─── CURRENT FOCUS PILL ─── */
-.focus-label{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(96,165,250,0.09);
-  border:1px solid rgba(96,165,250,0.2);
-  color:var(--blue);
-  font-size:10px;letter-spacing:1px;
-  padding:4px 12px;border-radius:999px;
-  margin-bottom:20px;
+.logo-wrap{
+  display:flex;
+  gap:16px;
+  align-items:center;
+}
+
+.logo{
+  width:60px;
+  height:60px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#ff6600,#ff9900,#ffcf70);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:black;
+  font-family:var(--display);
+  font-weight:700;
+  font-size:24px;
+  box-shadow:0 0 40px rgba(255,153,0,0.25);
+}
+
+.hero h1{
+  font-family:var(--display);
+  font-size:38px;
+  line-height:1.1;
+}
+
+.hero h1 span{
+  color:var(--accent);
+}
+
+.hero p{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.badges{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+
+.badge{
+  padding:7px 14px;
+  border-radius:999px;
+  font-size:11px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.03);
+  color:var(--muted);
+  letter-spacing:1px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-top:28px;
+}
+
+.stat{
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:22px;
+}
+
+.stat-number{
+  font-size:36px;
+  font-family:var(--display);
+  font-weight:700;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:6px;
+  letter-spacing:1px;
   text-transform:uppercase;
 }
-.focus-dot{width:6px;height:6px;background:var(--blue);border-radius:50%;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.4);}}
 
-.week{margin-bottom:14px;}
-.week-header{
-  background:var(--s1);
-  border:1px solid var(--border);
-  border-radius:var(--r2);
-  padding:16px 22px;
-  display:flex;align-items:center;justify-content:space-between;
-  cursor:pointer;
-  transition:border-color 0.2s,background 0.2s;
-  user-select:none;
+.progress{
+  margin-top:28px;
 }
-.week-header:hover{border-color:var(--border2);background:var(--s2);}
-.week-header.active-week{border-color:rgba(255,153,0,0.3);background:rgba(255,153,0,0.04);}
-.week-left{display:flex;align-items:center;gap:14px;}
-.week-num{
-  font-family:var(--display);font-size:11px;font-weight:700;
-  color:var(--accent);letter-spacing:1px;
-  background:rgba(255,153,0,0.1);
-  border:1px solid rgba(255,153,0,0.2);
-  padding:3px 10px;border-radius:6px;
-  text-transform:uppercase;white-space:nowrap;
-}
-.week-num.done-week{
-  background:rgba(34,212,110,0.1);border-color:rgba(34,212,110,0.2);color:var(--green);
-}
-.week-title{font-family:var(--display);font-size:17px;font-weight:600;}
-.week-right{display:flex;align-items:center;gap:14px;}
-.week-prog{font-size:11px;color:var(--muted);}
-.week-mini-bar{width:80px;height:3px;background:var(--s3);border-radius:999px;overflow:hidden;}
-.week-mini-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;transition:width 0.4s;}
-.chevron{font-size:14px;color:var(--muted);transition:transform 0.25s;}
-.collapsed .chevron{transform:rotate(-90deg);}
 
-.tasks{margin-top:10px;}
-.collapsed .tasks{display:none;}
-
-.section{
-  background:var(--s1);
-  border:1px solid var(--border);
-  border-radius:var(--r2);
-  margin-bottom:8px;
+.progress-bar{
+  height:8px;
+  background:var(--surface3);
+  border-radius:999px;
   overflow:hidden;
 }
-.section-hdr{
-  padding:12px 20px;
-  background:var(--s2);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:10px;
-}
-.section-icon{font-size:13px;}
-.section-name{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:600;}
-.section-count{margin-left:auto;font-size:10px;color:var(--muted);letter-spacing:0.5px;}
 
-.task{
-  padding:13px 20px;
-  display:flex;align-items:flex-start;gap:14px;
+.progress-fill{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#ff6600,#ff9900,#ffd280);
+  transition:0.4s;
+}
+
+.progress-text{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* sections */
+
+.section-title{
+  font-family:var(--display);
+  font-size:18px;
+  margin:36px 0 16px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.section-title::after{
+  content:'';
+  height:1px;
+  flex:1;
+  background:var(--border);
+}
+
+.week{
+  margin-bottom:18px;
+}
+
+.week-header{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:20px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   cursor:pointer;
-  border-bottom:1px solid var(--border);
-  transition:background 0.15s;
+  transition:0.2s;
 }
-.task:last-child{border-bottom:none;}
-.task:hover{background:var(--s2);}
-.task.done{background:var(--green-dim);}
-.task.done:hover{background:rgba(34,212,110,0.13);}
 
-.cb{
-  width:18px;height:18px;flex-shrink:0;
-  border-radius:5px;border:1.5px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;
-  margin-top:1px;transition:all 0.15s;
+.week-header:hover{
+  border-color:var(--border2);
+  background:var(--surface2);
 }
-.task.done .cb{background:var(--green);border-color:var(--green);}
-.ck{
-  width:5px;height:9px;
-  border:2px solid #000;border-top:none;border-left:none;
-  transform:rotate(45deg);display:none;
+
+.week-left{
+  display:flex;
+  align-items:center;
+  gap:18px;
 }
-.task.done .ck{display:block;}
 
-.task-body{flex:1;}
-.task-title{font-size:13px;line-height:1.55;color:var(--text);}
-.task.done .task-title{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(107,107,136,0.5);}
+.week-label{
+  background:rgba(255,153,0,0.12);
+  border:1px solid rgba(255,153,0,0.25);
+  color:var(--accent);
+  padding:6px 12px;
+  border-radius:10px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+}
 
-.tags{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;}
-.tag{padding:3px 9px;border-radius:999px;font-size:9px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;}
-.tag.easy{background:rgba(34,212,110,0.1);color:#22d46e;}
-.tag.med{background:rgba(251,191,36,0.1);color:#fbbf24;}
-.tag.hard{background:rgba(255,77,77,0.12);color:#ff4d4d;}
-.tag.lp{background:rgba(244,114,182,0.1);color:#f472b6;}
-.tag.mock{background:rgba(96,165,250,0.1);color:#60a5fa;}
-.tag.tip{background:rgba(167,139,250,0.1);color:#a78bfa;}
+.week-title-text{
+  font-family:var(--display);
+  font-size:20px;
+  font-weight:600;
+}
 
-/* ─── TIPS PANEL ─── */
-.tips-grid{
+.week-right{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.week-progress{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.mini-bar{
+  width:110px;
+  height:5px;
+  background:var(--surface3);
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.mini-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+}
+
+.chevron{
+  color:var(--muted);
+  transition:0.3s;
+}
+
+.week.collapsed .chevron{
+  transform:rotate(-90deg);
+}
+
+.week.collapsed .week-content{
+  display:none;
+}
+
+.week-content{
+  margin-top:12px;
+}
+
+.focus-box{
+  background:rgba(255,153,0,0.05);
+  border:1px solid rgba(255,153,0,0.14);
+  border-radius:18px;
+  padding:16px 18px;
+  margin-bottom:14px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.tip-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:12px;
-  margin-bottom:28px;
+  margin-bottom:14px;
 }
-.tip-card{
-  background:var(--s1);
+
+.tip{
+  background:var(--surface);
   border:1px solid var(--border);
-  border-radius:var(--r2);
-  padding:18px 20px;
+  border-radius:18px;
+  padding:16px;
 }
-.tip-card-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-.tip-icon{font-size:18px;}
-.tip-card-title{font-family:var(--display);font-size:13px;font-weight:600;color:var(--accent2);}
-.tip-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
-.tip-list li{font-size:11px;color:var(--muted2);display:flex;gap:8px;line-height:1.5;}
-.tip-list li::before{content:'›';color:var(--accent);flex-shrink:0;font-size:13px;}
 
-/* ─── SECTION LABELS ─── */
-.section-label{
-  font-family:var(--display);font-size:13px;font-weight:600;
-  color:var(--muted2);letter-spacing:0.5px;
-  margin:0 0 14px;
-  display:flex;align-items:center;gap:10px;
+.tip-title{
+  font-family:var(--display);
+  font-size:14px;
+  color:var(--accent2);
+  margin-bottom:10px;
 }
-.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* ─── RESPONSIVE ─── */
-@media(max-width:680px){
-  .hdr,.container{padding-left:20px;padding-right:20px;}
-  .logo-text h1{font-size:22px;}
-  .today-banner{flex-direction:column;gap:10px;}
-  .stats{gap:8px;}
-  .stat{min-width:100px;padding:12px 14px;}
-  .stat-n{font-size:24px;}
+.tip ul{
+  padding-left:16px;
+}
+
+.tip li{
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:7px;
+  line-height:1.5;
+}
+
+.category{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:14px;
+}
+
+.category-head{
+  background:var(--surface2);
+  border-bottom:1px solid var(--border);
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.category-name{
+  font-size:12px;
+  color:var(--accent);
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.task{
+  display:flex;
+  gap:16px;
+  padding:16px 18px;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  transition:0.15s;
+}
+
+.task:last-child{
+  border-bottom:none;
+}
+
+.task:hover{
+  background:rgba(255,255,255,0.03);
+}
+
+.task.done{
+  background:rgba(34,212,110,0.08);
+}
+
+.checkbox{
+  width:20px;
+  height:20px;
+  border-radius:6px;
+  border:1.5px solid var(--border2);
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:2px;
+}
+
+.task.done .checkbox{
+  background:var(--green);
+  border-color:var(--green);
+}
+
+.check{
+  width:5px;
+  height:10px;
+  border:2px solid black;
+  border-top:none;
+  border-left:none;
+  transform:rotate(45deg);
+  display:none;
+}
+
+.task.done .check{
+  display:block;
+}
+
+.task-main{
+  flex:1;
+}
+
+.task-title{
+  font-size:13px;
+  line-height:1.6;
+}
+
+.task.done .task-title{
+  text-decoration:line-through;
+  color:var(--muted);
+}
+
+.tags{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:9px;
+}
+
+.tag{
+  font-size:9px;
+  padding:4px 8px;
+  border-radius:999px;
+  font-weight:700;
+  letter-spacing:1px;
+}
+
+.easy{
+  background:rgba(34,212,110,0.1);
+  color:#22d46e;
+}
+
+.med{
+  background:rgba(251,191,36,0.1);
+  color:#fbbf24;
+}
+
+.hard{
+  background:rgba(255,77,77,0.12);
+  color:#ff5d73;
+}
+
+.lp{
+  background:rgba(244,114,182,0.1);
+  color:#f472b6;
+}
+
+.cs{
+  background:rgba(96,165,250,0.1);
+  color:#60a5fa;
+}
+
+.mock{
+  background:rgba(167,139,250,0.12);
+  color:#a78bfa;
+}
+
+.note{
+  margin-top:10px;
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.6;
+  background:rgba(255,255,255,0.03);
+  border-left:2px solid rgba(255,153,0,0.4);
+  padding:10px 12px;
+  border-radius:0 10px 10px 0;
+}
+
+@media(max-width:850px){
+
+  .wrapper{
+    padding:18px;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hero h1{
+    font-size:28px;
+  }
+
+  .week-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+  }
 }
 </style>
 </head>
+
 <body>
 
-<div class="hdr">
-  <div class="hdr-glow"></div>
-  <div class="hdr-glow2"></div>
+<div class="wrapper">
 
-  <div class="logo-row">
-    <div class="logo-icon">A↗</div>
-    <div class="logo-text">
-      <h1>Amazon SDE <em>2026</em></h1>
-      <p>DSA · LP · Mock Interviews · OA Prep</p>
-    </div>
-  </div>
+  <div class="hero">
 
-  <!-- TODAY'S FOCUS -->
-  <div class="today-banner" id="todayBanner">
-    <div class="today-badge">Today</div>
-    <div class="today-content">
-      <div class="today-title">Up next — focus on these</div>
-      <div class="today-tasks" id="todayTasks">
-        <span class="today-item">Loading...</span>
+    <div class="hero-top">
+
+      <div>
+        <div class="logo-wrap">
+          <div class="logo">S↗</div>
+
+          <div>
+            <h1>Ultimate <span>SDE Interview</span> Tracker</h1>
+            <p>
+              FAANG · Amazon · Google · Microsoft · Atlassian · Uber · Intern + Full Time
+            </p>
+          </div>
+        </div>
+
+        <div class="badges">
+          <div class="badge">DSA</div>
+          <div class="badge">Core CS</div>
+          <div class="badge">System Design</div>
+          <div class="badge">Leadership Principles</div>
+          <div class="badge">Mock Interviews</div>
+          <div class="badge">Resume</div>
+          <div class="badge">OA Prep</div>
+        </div>
       </div>
+
     </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-number" id="doneCount" style="color:var(--green)">0</div>
+        <div class="stat-label">Completed</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number" id="leftCount">0</div>
+        <div class="stat-label">Remaining</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number" id="percentCount" style="color:var(--accent)">0%</div>
+        <div class="stat-label">Progress</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number" id="totalCount" style="color:var(--blue)">0</div>
+        <div class="stat-label">Total Tasks</div>
+      </div>
+
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-text" id="progressText">0 / 0 complete</div>
+    </div>
+
   </div>
 
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-n green" id="doneCount">0</div>
-      <div class="stat-l">Completed</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n muted" id="leftCount">0</div>
-      <div class="stat-l">Remaining</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n amber" id="pctCount">0%</div>
-      <div class="stat-l">Progress</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n" id="weekCount" style="color:var(--blue)">—</div>
-      <div class="stat-l">Active Week</div>
-    </div>
-  </div>
+  <div class="section-title">Complete Roadmap</div>
 
-  <div class="xp-bar-wrap">
-    <div class="xp-bar"><div class="xp-fill" id="xpFill"></div></div>
-    <div class="xp-text" id="xpText">0 / 0 tasks</div>
-  </div>
+  <div id="app"></div>
+
 </div>
 
-<div class="container" id="root"></div>
-
 <script>
-const KEY = "amzn_prep_v3";
+
+const STORAGE_KEY = "ultimate_sde_tracker_v1";
 
 const DATA = [
+
 {
-  title:"Week 1 — Plug The Gaps",
   label:"W1",
-  focus:"Sliding window, heaps, and LP mapping",
+  title:"Arrays + Sliding Window + Amazon LP Foundations",
+  focus:"Master the most common OA patterns and start building strong behavioural stories.",
+
   tips:[
-    "Time every problem — aim for ≤25 min on mediums.",
-    "After each problem, verbalize the time & space complexity aloud.",
-    "Use the two-pointer mental model before reaching for a hashmap."
-  ],
-  sections:[
     {
-      name:"Coding",icon:"⚡",
-      tasks:[
-        {title:"#76 Minimum Window Substring",tags:["hard"],tip:"Classic sliding window — use char freq maps with a 'have/need' counter."},
-        {title:"#239 Sliding Window Maximum",tags:["hard"],tip:"Monotonic deque is the key. Think: what can I discard from the deque?"},
-        {title:"#84 Largest Rectangle in Histogram",tags:["hard"],tip:"Monotonic stack pattern — push index, pop when height decreases."},
-        {title:"#981 Time Based Key-Value Store",tags:["med"],tip:"Binary search on timestamps stored per key."},
-        {title:"#295 Find Median from Data Stream",tags:["hard"],tip:"Two heaps: max-heap for lower half, min-heap for upper half."},
-        {title:"Redo all weak Array + Sliding Window problems timed",tags:["med"]},
-        {title:"Learn heap template from memory",tags:["med"],tip:"heapq.heappush/heappop in Python, PriorityQueue in Java."}
-      ]
-    },
-    {
-      name:"Leadership Principles",icon:"🎯",
-      tasks:[
-        {title:"Read all 16 Amazon Leadership Principles",tags:["lp"],tip:"Print them out. Internalize the language — interviewers use LP words."},
-        {title:"Write 10 project/experience bullets",tags:["lp"],tip:"Pull from internships, projects, college work, hackathons."},
-        {title:"Map each experience to 2 LPs",tags:["lp"],tip:"Aim for coverage across Ownership, Bias for Action, Deliver Results, Customer Obsession."},
-        {title:"Draft STAR answers for Ownership + Bias for Action",tags:["lp"],tip:"S=1 sentence, T=1 sentence, A=3-5 sentences of YOUR actions, R=quantified outcome."}
+      title:"Important",
+      points:[
+        "Mediums should ideally be solved within 25–30 minutes.",
+        "Always explain brute force before optimal.",
+        "Practice writing clean variable names and edge cases."
       ]
     }
+  ],
+
+  sections:[
+
+    {
+      name:"DSA Problems",
+      tasks:[
+
+        {title:"#1 Two Sum",tags:["easy"]},
+        {title:"#217 Contains Duplicate",tags:["easy"]},
+        {title:"#238 Product of Array Except Self",tags:["med"]},
+        {title:"#347 Top K Frequent Elements",tags:["med"]},
+        {title:"#128 Longest Consecutive Sequence",tags:["med"]},
+        {title:"#49 Group Anagrams",tags:["med"]},
+        {title:"#242 Valid Anagram",tags:["easy"]},
+        {title:"#271 Encode and Decode Strings",tags:["med"]},
+
+        {title:"#121 Best Time to Buy and Sell Stock",tags:["easy"]},
+        {title:"#3 Longest Substring Without Repeating Characters",tags:["med"]},
+        {title:"#567 Permutation in String",tags:["med"]},
+        {title:"#209 Minimum Size Subarray Sum",tags:["med"]},
+        {title:"#424 Longest Repeating Character Replacement",tags:["med"]},
+        {title:"#76 Minimum Window Substring",tags:["hard"]},
+        {title:"#239 Sliding Window Maximum",tags:["hard"]}
+
+      ]
+    },
+
+    {
+      name:"Leadership Principles",
+      tasks:[
+        {title:"Read all Amazon Leadership Principles deeply",tags:["lp"]},
+        {title:"Write STAR stories for Ownership",tags:["lp"]},
+        {title:"Write STAR stories for Bias for Action",tags:["lp"]},
+        {title:"Write STAR stories for Customer Obsession",tags:["lp"]},
+        {title:"Prepare a strong 90-second introduction",tags:["lp"]},
+        {title:"Prepare Why Amazon answer",tags:["lp"]}
+      ]
+    },
+
+    {
+      name:"Core CS",
+      tasks:[
+        {title:"OS — Process vs Thread",tags:["cs"]},
+        {title:"OS — Context Switching",tags:["cs"]},
+        {title:"OS — Deadlock Conditions",tags:["cs"]},
+        {title:"DBMS — ACID Properties",tags:["cs"]},
+        {title:"DBMS — Primary Key vs Foreign Key",tags:["cs"]},
+        {title:"CN — TCP vs UDP",tags:["cs"]},
+        {title:"OOPs — Inheritance, Polymorphism, Encapsulation",tags:["cs"]}
+      ]
+    }
+
   ]
 },
+
 {
-  title:"Week 2 — Graphs + DP + Backtracking",
   label:"W2",
-  focus:"Graph traversal patterns and DP subproblem thinking",
+  title:"Two Pointers + Stack + Binary Search",
+  focus:"This week builds pattern recognition speed — extremely common for Google, Amazon, Uber and Atlassian.",
+
   tips:[
-    "For graphs, always ask: directed/undirected? Weighted? Can I use BFS or do I need Dijkstra?",
-    "DP: identify the 'choice' at each step. Memoize top-down first, then optimize to bottom-up.",
-    "Backtracking = DFS + undo. Always think about what to undo before moving on."
-  ],
-  sections:[
     {
-      name:"Coding",icon:"⚡",
-      tasks:[
-        {title:"#127 Word Ladder",tags:["hard"],tip:"BFS level-by-level, treat words as graph nodes, single char changes as edges."},
-        {title:"#417 Pacific Atlantic Water Flow",tags:["med"],tip:"Reverse DFS from ocean borders inward — cleaner than forward flow."},
-        {title:"#207 Course Schedule",tags:["med"],tip:"Cycle detection in directed graph via DFS with 3 states (unvisited/visiting/done)."},
-        {title:"#322 Coin Change",tags:["med"],tip:"Classic unbounded knapsack. dp[i] = min coins to make amount i."},
-        {title:"#300 Longest Increasing Subsequence",tags:["med"],tip:"O(n log n) with patience sorting / binary search. Know both approaches."},
-        {title:"#46 Permutations",tags:["med"],tip:"Backtracking with used[] array. Draw the recursion tree first."},
-        {title:"#79 Word Search",tags:["med"],tip:"DFS + in-place visited marking (XOR trick). Restore after backtrack."},
-        {title:"Timed mock: 1 easy + 1 medium in 45 mins",tags:["mock"],tip:"Start easy, nail it in 10 min. Spend 35 on the medium."}
-      ]
-    },
-    {
-      name:"Behavioural + Intro",icon:"🎤",
-      tasks:[
-        {title:"Write 90-second self introduction",tags:["lp"],tip:"Structure: Name → Degree + School → 1 key project → Why SDE → Why Amazon."},
-        {title:"Practice intro aloud 5 times",tags:["lp"],tip:"Timer on. No filler words. Eye contact (camera)."},
-        {title:"Record yourself once and review",tags:["lp"],tip:"Watch for: rushed speaking, ums, not looking at camera."},
-        {title:"Prepare 'Why Amazon' answer",tags:["lp"],tip:"Reference LPs + a specific Amazon product/service/team you admire."},
-        {title:"STAR story for conflict or failure",tags:["lp"],tip:"Own the mistake fully. Emphasize learning and what you'd do differently."}
+      title:"Binary Search Rule",
+      points:[
+        "Binary search is NOT only for sorted arrays.",
+        "Use binary search on answer when monotonicity exists."
       ]
     }
+  ],
+
+  sections:[
+
+    {
+      name:"DSA Problems",
+      tasks:[
+
+        {title:"#125 Valid Palindrome",tags:["easy"]},
+        {title:"#15 3Sum",tags:["med"]},
+        {title:"#11 Container With Most Water",tags:["med"]},
+        {title:"#42 Trapping Rain Water",tags:["hard"]},
+        {title:"#26 Remove Duplicates from Sorted Array",tags:["easy"]},
+
+        {title:"#20 Valid Parentheses",tags:["easy"]},
+        {title:"#739 Daily Temperatures",tags:["med"]},
+        {title:"#150 Evaluate Reverse Polish Notation",tags:["med"]},
+        {title:"#155 Min Stack",tags:["med"]},
+        {title:"#84 Largest Rectangle in Histogram",tags:["hard"]},
+        {title:"#853 Car Fleet",tags:["med"]},
+
+        {title:"#704 Binary Search",tags:["easy"]},
+        {title:"#33 Search in Rotated Sorted Array",tags:["med"]},
+        {title:"#875 Koko Eating Bananas",tags:["med"]},
+        {title:"#153 Find Minimum in Rotated Sorted Array",tags:["med"]},
+        {title:"#981 Time Based Key-Value Store",tags:["med"]},
+        {title:"#4 Median of Two Sorted Arrays",tags:["hard"]}
+
+      ]
+    },
+
+    {
+      name:"Core CS",
+      tasks:[
+        {title:"OS — Scheduling Algorithms",tags:["cs"]},
+        {title:"OS — Paging vs Segmentation",tags:["cs"]},
+        {title:"DBMS — Normalization",tags:["cs"]},
+        {title:"DBMS — Joins",tags:["cs"]},
+        {title:"CN — HTTP vs HTTPS",tags:["cs"]},
+        {title:"CN — DNS Resolution Flow",tags:["cs"]},
+        {title:"OOPs — Abstraction vs Encapsulation",tags:["cs"]}
+      ]
+    },
+
+    {
+      name:"Interview Behavioural",
+      tasks:[
+        {title:"Prepare conflict/failure story",tags:["lp"]},
+        {title:"Prepare leadership story",tags:["lp"]},
+        {title:"Practice speaking slowly and clearly",tags:["lp"]},
+        {title:"Record mock introduction",tags:["mock"]}
+      ]
+    }
+
   ]
 },
+
 {
-  title:"Week 3 — Mock Interview Week",
   label:"W3",
-  focus:"Simulated pressure — treat every mock as the real thing",
+  title:"Linked Lists + Trees + Heap",
+  focus:"Heavy interview week — these topics appear constantly in real interviews.",
+
   tips:[
-    "Think out loud the entire time. Silence kills in Amazon interviews.",
-    "After each mock: write down what you fumbled. Fix it before the next one.",
-    "Always clarify constraints first (input size, edge cases, duplicates)."
-  ],
-  sections:[
     {
-      name:"Coding Mocks",icon:"🧪",
-      tasks:[
-        {title:"Mock Interview #1 — focus on communication",tags:["mock"],tip:"Narrate every decision: brute force first, then optimize."},
-        {title:"Mock Interview #2 — focus on speed",tags:["mock"],tip:"Target: clean solution within 30 min for mediums."},
-        {title:"Mock Interview #3 — LP + coding combined",tags:["mock"],tip:"Simulate a real Amazon loop: 15 min LP + 35 min coding."},
-        {title:"Redo every problem you timed out on",tags:["med"],tip:"No looking at solution. Set timer. Forced reps build the pattern recognition."},
-        {title:"Practice explaining brute force → optimal clearly",tags:["mock"],tip:"'My brute force is O(n²), I can improve by...' — say this every time."}
-      ]
-    },
-    {
-      name:"LP Round Simulation",icon:"🗣️",
-      tasks:[
-        {title:"Practice Ownership story (full STAR, 2 min)",tags:["lp"]},
-        {title:"Practice Deal with Ambiguity story",tags:["lp"],tip:"Describe a time you had incomplete info. Show structured thinking under uncertainty."},
-        {title:"Practice Biggest Failure story",tags:["lp"],tip:"Don't minimize it. Show deep reflection + concrete changes you made."},
-        {title:"Full mock LP round (4 questions, timed)",tags:["mock"],tip:"Use a friend or record yourself. Real pressure reveals real gaps."}
+      title:"Trees Tip",
+      points:[
+        "Draw the recursion tree before coding.",
+        "State base cases FIRST in interviews."
       ]
     }
+  ],
+
+  sections:[
+
+    {
+      name:"DSA Problems",
+      tasks:[
+
+        {title:"#206 Reverse Linked List",tags:["easy"]},
+        {title:"#141 Linked List Cycle",tags:["easy"]},
+        {title:"#21 Merge Two Sorted Lists",tags:["easy"]},
+        {title:"#19 Remove Nth Node From End",tags:["med"]},
+        {title:"#143 Reorder List",tags:["med"]},
+        {title:"#146 LRU Cache",tags:["med"]},
+
+        {title:"#104 Maximum Depth of Binary Tree",tags:["easy"]},
+        {title:"#102 Binary Tree Level Order Traversal",tags:["med"]},
+        {title:"#98 Validate Binary Search Tree",tags:["med"]},
+        {title:"#235 Lowest Common Ancestor of BST",tags:["med"]},
+        {title:"#199 Binary Tree Right Side View",tags:["med"]},
+        {title:"#1448 Count Good Nodes in Binary Tree",tags:["med"]},
+        {title:"#230 Kth Smallest Element in BST",tags:["med"]},
+        {title:"#105 Construct Binary Tree from Preorder + Inorder",tags:["med"]},
+
+        {title:"#215 Kth Largest Element in Array",tags:["med"]},
+        {title:"#973 K Closest Points to Origin",tags:["med"]},
+        {title:"#621 Task Scheduler",tags:["med"]},
+        {title:"#295 Find Median from Data Stream",tags:["hard"]},
+        {title:"#767 Reorganize String",tags:["med"]},
+        {title:"#355 Design Twitter",tags:["med"]},
+        {title:"#632 Smallest Range Covering K Lists",tags:["hard"]}
+
+      ]
+    },
+
+    {
+      name:"Core CS",
+      tasks:[
+        {title:"DBMS — Indexing and B+ Trees",tags:["cs"]},
+        {title:"DBMS — Transactions and Isolation Levels",tags:["cs"]},
+        {title:"OS — Semaphores and Mutex",tags:["cs"]},
+        {title:"OS — Producer Consumer Problem",tags:["cs"]},
+        {title:"CN — OSI Model",tags:["cs"]},
+        {title:"CN — TCP 3-Way Handshake",tags:["cs"]}
+      ]
+    },
+
+    {
+      name:"Resume + Projects",
+      tasks:[
+        {title:"Add measurable impact to project bullets",tags:["mock"]},
+        {title:"Prepare deep explanation for 2 strongest projects",tags:["mock"]},
+        {title:"Practice architecture explanation of projects",tags:["mock"]},
+        {title:"Prepare scalability discussion for projects",tags:["mock"]}
+      ]
+    }
+
   ]
 },
+
 {
-  title:"Week 4 — Final Sharpening",
   label:"W4",
-  focus:"OA simulation and full-stack LP readiness",
+  title:"Graphs + Backtracking + Dynamic Programming",
+  focus:"This is the real interview killer zone — most candidates fail here.",
+
   tips:[
-    "In an OA, read both problems first, start with the easier one.",
-    "Check edge cases before submitting: empty input, single element, all same values.",
-    "Write clean code — Amazon OAs are auto-judged AND sometimes manually reviewed."
-  ],
-  sections:[
     {
-      name:"OA Simulation",icon:"💻",
-      tasks:[
-        {title:"#215 Kth Largest Element in Array",tags:["med"],tip:"Quickselect O(n) avg or min-heap O(n log k). Know both."},
-        {title:"#347 Top K Frequent Elements",tags:["med"],tip:"Bucket sort trick: index = frequency, array of lists."},
-        {title:"#146 LRU Cache",tags:["med"],tip:"Doubly linked list + hashmap. Draw it before coding."},
-        {title:"#56 Merge Intervals",tags:["med"],tip:"Sort by start. Merge if overlap (curr.start ≤ prev.end)."},
-        {title:"Full 2-problem OA simulation (70 min, no hints)",tags:["mock"],tip:"Absolute silence. Phone away. Simulate the real conditions exactly."},
-        {title:"Complexity cheatsheet — review every pattern",tags:["mock"],tip:"Array/2ptr/SW: O(n). Heap: O(n log k). BFS/DFS: O(V+E). DP varies."}
-      ]
-    },
-    {
-      name:"Final LP Prep",icon:"🏆",
-      tasks:[
-        {title:"Deliver all STAR answers under 2 minutes",tags:["lp"],tip:"Time yourself. Going over 2 min signals rambling — cut fluff."},
-        {title:"Prepare 3 smart questions for interviewer",tags:["lp"],tip:"Ask about team culture, LP they embody most, or what success looks like in 90 days."},
-        {title:"Prepare 'weakness' answer",tags:["lp"],tip:"Real weakness + what you're actively doing to improve it. No fake answers."},
-        {title:"Final intro cleanup — under 90 seconds",tags:["lp"]}
+      title:"DP Rule",
+      points:[
+        "Always define state clearly.",
+        "Memoization first, optimization later."
       ]
     }
+  ],
+
+  sections:[
+
+    {
+      name:"DSA Problems",
+      tasks:[
+
+        {title:"#200 Number of Islands",tags:["med"]},
+        {title:"#133 Clone Graph",tags:["med"]},
+        {title:"#207 Course Schedule",tags:["med"]},
+        {title:"#417 Pacific Atlantic Water Flow",tags:["med"]},
+        {title:"#994 Rotting Oranges",tags:["med"]},
+        {title:"#127 Word Ladder",tags:["hard"]},
+
+        {title:"#78 Subsets",tags:["med"]},
+        {title:"#39 Combination Sum",tags:["med"]},
+        {title:"#79 Word Search",tags:["med"]},
+        {title:"#46 Permutations",tags:["med"]},
+        {title:"#17 Letter Combinations of Phone Number",tags:["med"]},
+
+        {title:"#70 Climbing Stairs",tags:["easy"]},
+        {title:"#198 House Robber",tags:["med"]},
+        {title:"#322 Coin Change",tags:["med"]},
+        {title:"#300 Longest Increasing Subsequence",tags:["med"]}
+
+      ]
+    },
+
+    {
+      name:"System Design Basics",
+      tasks:[
+        {title:"Load Balancer Basics",tags:["cs"]},
+        {title:"Caching Basics",tags:["cs"]},
+        {title:"Horizontal vs Vertical Scaling",tags:["cs"]},
+        {title:"CAP Theorem",tags:["cs"]},
+        {title:"Database Sharding Basics",tags:["cs"]},
+        {title:"CDN Basics",tags:["cs"]},
+        {title:"Rate Limiting Basics",tags:["cs"]}
+      ]
+    },
+
+    {
+      name:"Mock Interviews",
+      tasks:[
+        {title:"Mock Interview #1",tags:["mock"]},
+        {title:"Mock Interview #2",tags:["mock"]},
+        {title:"Mock Interview #3",tags:["mock"]},
+        {title:"Mock LP Round",tags:["mock"]},
+        {title:"Timed OA Simulation",tags:["mock"]}
+      ]
+    }
+
   ]
 },
+
 {
-  title:"Week 4.5 — Light Review + Mental Reset",
-  label:"W4½",
-  focus:"Rest and review only. No new material.",
+  label:"W5",
+  title:"Advanced Interview Readiness",
+  focus:"Now refine communication, speed, and consistency.",
+
   tips:[
-    "Your performance under pressure is locked in. Trust your preparation.",
-    "8 hours of sleep the night before is more valuable than 3 hours of cramming.",
-    "Eat before the interview. Have water nearby. Treat it like a sport."
-  ],
-  sections:[
     {
-      name:"Light Revision Only",icon:"📋",
-      tasks:[
-        {title:"Write BFS template from memory (no looking)",tags:["easy"],tip:"Queue + visited set. Enqueue start, loop until empty."},
-        {title:"Write DFS template from memory (no looking)",tags:["easy"],tip:"Recursive with base case, or iterative with stack."},
-        {title:"Write Binary Search template from memory",tags:["easy"],tip:"lo=0, hi=n-1, while lo≤hi, mid=(lo+hi)//2. Know left/right variants."},
-        {title:"Review your mistake log from weeks 1-3",tags:["med"],tip:"Focus only on repeated mistakes. These are your blind spots."},
-        {title:"Read LP stories once — no editing",tags:["lp"],tip:"Just a light pass to keep them fresh. Don't second-guess."}
-      ]
-    },
-    {
-      name:"Interview Day Setup",icon:"🚀",
-      tasks:[
-        {title:"Set up quiet room, good lighting, stable internet",tags:["mock"],tip:"Test mic + camera. Have a backup device charged."},
-        {title:"Sleep 8 hours the night before",tags:["mock"]},
-        {title:"No new problems the day of the interview",tags:["mock"],tip:"Go for a 20 min walk instead. Calm beats cramming."}
+      title:"Communication",
+      points:[
+        "Interviewers evaluate communication constantly.",
+        "Narrate your thought process clearly."
       ]
     }
+  ],
+
+  sections:[
+
+    {
+      name:"Advanced System Design",
+      tasks:[
+        {title:"Design URL Shortener",tags:["cs"]},
+        {title:"Design Tiny Chat System",tags:["cs"]},
+        {title:"Design Notification Service",tags:["cs"]},
+        {title:"Design Instagram Feed Basics",tags:["cs"]},
+        {title:"Design Rate Limiter",tags:["cs"]}
+      ]
+    },
+
+    {
+      name:"Behavioural Mastery",
+      tasks:[
+        {title:"Prepare 10 STAR stories",tags:["lp"]},
+        {title:"Practice stories under 2 minutes",tags:["lp"]},
+        {title:"Prepare ambiguity story",tags:["lp"]},
+        {title:"Prepare conflict resolution story",tags:["lp"]},
+        {title:"Prepare biggest failure story",tags:["lp"]},
+        {title:"Prepare biggest achievement story",tags:["lp"]}
+      ]
+    },
+
+    {
+      name:"Revision",
+      tasks:[
+        {title:"Revise all heap patterns",tags:["med"]},
+        {title:"Revise graph traversal templates",tags:["med"]},
+        {title:"Revise DP patterns",tags:["med"]},
+        {title:"Write BFS template from memory",tags:["easy"]},
+        {title:"Write DFS template from memory",tags:["easy"]},
+        {title:"Write Binary Search template from memory",tags:["easy"]}
+      ]
+    }
+
   ]
 }
+
 ];
 
-let done = JSON.parse(localStorage.getItem(KEY) || "[]");
-function save(){localStorage.setItem(KEY,JSON.stringify(done));}
+let done = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+function save(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(done));
+}
 
 function toggleTask(id){
-  if(done.includes(id)) done=done.filter(x=>x!==id);
-  else done.push(id);
+
+  if(done.includes(id)){
+    done = done.filter(x => x !== id);
+  }else{
+    done.push(id);
+  }
+
   save();
   render();
 }
+
 function toggleWeek(id){
   document.getElementById(id).classList.toggle("collapsed");
 }
 
-/* ── TODAY'S FOCUS LOGIC ── */
-function getTodayTasks(){
-  const upcoming = [];
-  DATA.forEach((w,wi)=>{
-    w.sections.forEach((s,si)=>{
-      s.tasks.forEach((t,ti)=>{
-        const id = `${wi}-${si}-${ti}`;
-        if(!done.includes(id)) upcoming.push({t,id,wLabel:w.label});
-      });
-    });
-  });
-  return upcoming.slice(0,4);
-}
+function renderStats(total){
 
-function updateStats(){
-  let total=0;
-  DATA.forEach(w=>w.sections.forEach(s=>{total+=s.tasks.length;}));
-  const d=done.length, left=total-d, pct=total?Math.round((d/total)*100):0;
-  document.getElementById("doneCount").innerText=d;
-  document.getElementById("leftCount").innerText=left;
-  document.getElementById("pctCount").innerText=pct+"%";
-  document.getElementById("xpFill").style.width=pct+"%";
-  document.getElementById("xpText").innerText=`${d} of ${total} tasks complete`;
+  const completed = done.length;
+  const left = total - completed;
+  const pct = Math.round((completed / total) * 100);
 
-  // active week
-  let activeWeek="All done!";
-  for(let wi=0;wi<DATA.length;wi++){
-    let wTotal=0,wDone=0;
-    DATA[wi].sections.forEach((s,si)=>{
-      s.tasks.forEach((_,ti)=>{wTotal++;if(done.includes(`${wi}-${si}-${ti}`))wDone++;});
-    });
-    if(wDone<wTotal){activeWeek=DATA[wi].label;break;}
-  }
-  document.getElementById("weekCount").innerText=activeWeek;
+  document.getElementById("doneCount").innerText = completed;
+  document.getElementById("leftCount").innerText = left;
+  document.getElementById("percentCount").innerText = pct + "%";
+  document.getElementById("totalCount").innerText = total;
 
-  // today banner
-  const upcoming=getTodayTasks();
-  const tEl=document.getElementById("todayTasks");
-  if(upcoming.length===0){
-    tEl.innerHTML='<span class="today-empty">All tasks complete! You\'re ready.</span>';
-  } else {
-    tEl.innerHTML=upcoming.map(u=>`<span class="today-item">[${u.wLabel}] ${u.t.title.replace(/^#\d+ /,'')}</span>`).join("");
-  }
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("progressText").innerText =
+    completed + " / " + total + " complete";
 }
 
 function render(){
-  const root=document.getElementById("root");
 
-  // Tips section
-  let html='<div class="section-label">Interview Strategy Tips</div><div class="tips-grid">';
-  const allTips=[
-    {icon:"⏱️",title:"Timing Strategy",tips:["Easy LeetCode: target ≤ 15 min","Medium: target ≤ 30 min","Hard: aim for brute force in 20 min, optimize next 20","OA: scan both problems, do easier one first"]},
-    {icon:"💬",title:"Communication Pattern",tips:["Clarify → Brute Force → Optimize → Code → Test","Think aloud at every step — silence = uncertainty signal","State assumptions explicitly","Recap your approach in 1 sentence before coding"]},
-    {icon:"🎯",title:"LP Interview Formula",tips:["One story per principle — never reuse","Keep answers to 90–120 seconds","S+T = 20%, A = 60%, R = 20%","Always quantify results (%, $, time saved)"]},
-    {icon:"🧠",title:"Common Amazon Patterns",tips:["Two pointers / Sliding window","BFS for shortest path problems","Monotonic stack for next/prev greater","Top K → Heap; Median → Two heaps"]}
-  ];
-  allTips.forEach(tc=>{
-    html+=`<div class="tip-card">
-      <div class="tip-card-hdr"><span class="tip-icon">${tc.icon}</span><span class="tip-card-title">${tc.title}</span></div>
-      <ul class="tip-list">${tc.tips.map(t=>`<li>${t}</li>`).join("")}</ul>
-    </div>`;
-  });
-  html+='</div><div class="section-label" style="margin-top:8px">Prep Schedule</div>';
+  const app = document.getElementById("app");
 
-  DATA.forEach((week,wi)=>{
-    let wTotal=0,wDone=0;
-    week.sections.forEach((s,si)=>{s.tasks.forEach((_,ti)=>{wTotal++;if(done.includes(`${wi}-${si}-${ti}`))wDone++;});});
-    const wPct=wTotal?Math.round((wDone/wTotal)*100):0;
-    const isComplete=wDone===wTotal;
-    const isActive=!isComplete && DATA.slice(0,wi).every((_,i)=>{
-      let wd=0,wt=0;
-      DATA[i].sections.forEach((s,si)=>{s.tasks.forEach((_,ti)=>{wt++;if(done.includes(`${i}-${si}-${ti}`))wd++;});});
-      return wd===wt;
+  let html = "";
+  let totalTasks = 0;
+
+  DATA.forEach((week, wi) => {
+
+    let weekTotal = 0;
+    let weekDone = 0;
+
+    week.sections.forEach((sec, si) => {
+      sec.tasks.forEach((task, ti) => {
+
+        weekTotal++;
+        totalTasks++;
+
+        const id = `${wi}-${si}-${ti}`;
+
+        if(done.includes(id)) weekDone++;
+      });
     });
 
-    html+=`<div class="week" id="week-${wi}">
-      <div class="week-header${isActive?' active-week':''}" onclick="toggleWeek('week-${wi}')">
+    const pct = Math.round((weekDone / weekTotal) * 100);
+
+    html += `
+    <div class="week" id="week-${wi}">
+
+      <div class="week-header" onclick="toggleWeek('week-${wi}')">
+
         <div class="week-left">
-          <div class="week-num${isComplete?' done-week':''}">${week.label}</div>
-          <div class="week-title">${week.title}</div>
-        </div>
-        <div class="week-right">
-          <div class="week-prog">${wDone}/${wTotal}</div>
-          <div class="week-mini-bar"><div class="week-mini-fill" style="width:${wPct}%"></div></div>
-          <span class="chevron">▾</span>
-        </div>
-      </div>
-      <div class="tasks">`;
 
-    // Focus note
-    html+=`<div style="padding:10px 16px 2px;font-size:11px;color:var(--muted2);display:flex;align-items:center;gap:8px;">
-      <span style="color:var(--accent);font-size:10px;">◆</span> ${week.focus}
-    </div>`;
+          <div class="week-label">${week.label}</div>
 
-    // Week tips
-    if(week.tips&&week.tips.length){
-      html+=`<div style="padding:8px 16px 10px;display:flex;flex-wrap:wrap;gap:6px;">`;
-      week.tips.forEach(t=>{
-        html+=`<div style="background:rgba(255,153,0,0.06);border:1px solid rgba(255,153,0,0.12);border-radius:8px;padding:6px 12px;font-size:11px;color:var(--muted2);flex:1;min-width:200px;">
-          <span style="color:var(--accent);font-size:10px;font-weight:700;">TIP </span>${t}
-        </div>`;
-      });
-      html+=`</div>`;
-    }
-
-    week.sections.forEach((sec,si)=>{
-      const sDone=sec.tasks.filter((_,ti)=>done.includes(`${wi}-${si}-${ti}`)).length;
-      html+=`<div class="section">
-        <div class="section-hdr">
-          <span class="section-icon">${sec.icon}</span>
-          <span class="section-name">${sec.name}</span>
-          <span class="section-count">${sDone}/${sec.tasks.length}</span>
-        </div>`;
-      sec.tasks.forEach((task,ti)=>{
-        const id=`${wi}-${si}-${ti}`;
-        const isDone=done.includes(id);
-        html+=`<div class="task ${isDone?'done':''}" onclick="toggleTask('${id}')">
-          <div class="cb"><div class="ck"></div></div>
-          <div class="task-body">
-            <div class="task-title">${task.title}</div>
-            <div class="tags">
-              ${task.tags.map(t=>`<span class="tag ${t}">${t.toUpperCase()}</span>`).join("")}
-              ${task.tip?`<span class="tag tip" title="${task.tip.replace(/"/g,"'")}">HINT ▸</span>`:""}
-            </div>
-            ${task.tip&&!isDone?`<div style="margin-top:7px;font-size:11px;color:var(--muted);padding:6px 10px;background:rgba(255,255,255,0.03);border-left:2px solid rgba(255,153,0,0.3);border-radius:0 6px 6px 0;">${task.tip}</div>`:""}
+          <div class="week-title-text">
+            ${week.title}
           </div>
-        </div>`;
-      });
-      html+=`</div>`;
-    });
 
-    html+=`</div></div>`;
+        </div>
+
+        <div class="week-right">
+
+          <div class="week-progress">
+            ${weekDone}/${weekTotal}
+          </div>
+
+          <div class="mini-bar">
+            <div class="mini-fill" style="width:${pct}%"></div>
+          </div>
+
+          <div class="chevron">▾</div>
+
+        </div>
+
+      </div>
+
+      <div class="week-content">
+
+        <div class="focus-box">
+          ${week.focus}
+        </div>
+
+        <div class="tip-grid">
+
+          ${week.tips.map(t => `
+            <div class="tip">
+
+              <div class="tip-title">
+                ${t.title}
+              </div>
+
+              <ul>
+                ${t.points.map(p => `<li>${p}</li>`).join("")}
+              </ul>
+
+            </div>
+          `).join("")}
+
+        </div>
+
+        ${week.sections.map((sec, si) => {
+
+          const doneCount =
+          sec.tasks.filter((_, ti) =>
+          done.includes(`${wi}-${si}-${ti}`)).length;
+
+          return `
+
+          <div class="category">
+
+            <div class="category-head">
+
+              <div class="category-name">
+                ${sec.name}
+              </div>
+
+              <div style="font-size:11px;color:var(--muted)">
+                ${doneCount}/${sec.tasks.length}
+              </div>
+
+            </div>
+
+            ${sec.tasks.map((task, ti) => {
+
+              const id = `${wi}-${si}-${ti}`;
+              const isDone = done.includes(id);
+
+              return `
+              <div class="task ${isDone ? 'done' : ''}"
+                   onclick="toggleTask('${id}')">
+
+                <div class="checkbox">
+                  <div class="check"></div>
+                </div>
+
+                <div class="task-main">
+
+                  <div class="task-title">
+                    ${task.title}
+                  </div>
+
+                  <div class="tags">
+                    ${task.tags.map(tag =>
+                      `<span class="tag ${tag}">
+                        ${tag.toUpperCase()}
+                      </span>`).join("")}
+                  </div>
+
+                </div>
+
+              </div>
+              `;
+            }).join("")}
+
+          </div>
+
+          `;
+        }).join("")}
+
+      </div>
+
+    </div>
+    `;
   });
 
-  root.innerHTML=html;
-  updateStats();
+  app.innerHTML = html;
+
+  renderStats(totalTasks);
 }
 
 render();
+
 </script>
+
 </body>
 </html>

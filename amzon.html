@@ -24,6 +24,24 @@
   }
   body { background: var(--bg); color: var(--text); font-family: var(--font-mono); min-height: 100vh; overflow-x: hidden; }
 
+  .go-btn{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 8px 14px;
+  border-radius: 7px;
+  border: 1px solid rgba(255,107,53,0.25);
+  background: rgba(255,107,53,0.08);
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.go-btn:hover{
+  background: rgba(255,107,53,0.16);
+  border-color: rgba(255,107,53,0.45);
+  transform: translateY(-1px);
+}
+
   .header { padding: 40px 40px 28px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
   .header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,107,53,0.08) 0%, transparent 70%); pointer-events: none; }
   .logo { display: flex; align-items: center; gap: 12px; }
@@ -129,6 +147,9 @@
     <div class="stat-card"><div class="stat-n" id="s-left">0</div><div class="stat-label">Remaining</div></div>
     <div class="stat-card"><div class="stat-n accent" id="s-pct">0%</div><div class="stat-label">Progress</div></div>
     <div class="stat-card"><div class="stat-n" id="s-total">0</div><div class="stat-label">Total</div></div>
+    <button class="go-btn" onclick="window.location.href='haha.html'">
+  Open Full Roadmap →
+</button>
   </div>
   <div class="progress-wrap">
     <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
@@ -147,6 +168,7 @@
         <span class="search-icon">⌕</span>
         <input type="text" id="search" placeholder="Search problems..." oninput="render()" />
       </div>
+      
       <button class="filter-btn active" id="btn-all"      onclick="setDiff('all')">All</button>
       <button class="filter-btn"        id="btn-easy"     onclick="setDiff('easy')">Easy</button>
       <button class="filter-btn"        id="btn-med"      onclick="setDiff('med')">Med</button>
