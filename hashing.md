@@ -49,7 +49,7 @@ public:
     }
 };
 
-Order of n using hash map
+Order of n using hash map.   
 Space: O(1);
 
 
@@ -74,7 +74,7 @@ public:
     }
 };
 
-Order of n
+Order of n.   
 Space: O(1);
 
 
@@ -82,6 +82,56 @@ LeetCode Product of Array Except Self ✅
 ---
 
 FIRST APPROACH
+
+
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+
+        int n = nums.size();
+
+        vector<int> ans(n);
+
+        int prod = 1;
+        int zeros = 0;
+
+        for(int x : nums){
+
+            if(x == 0){
+                zeros++;
+            }else{
+                prod *= x;
+            }
+        }
+
+        for(int i=0;i<n;i++){
+
+            if(zeros > 1){
+                ans[i] = 0;
+            }
+
+            else if(zeros == 1){
+
+                if(nums[i] == 0){
+                    ans[i] = prod;
+                }else{
+                    ans[i] = 0;
+                }
+            }
+
+            else{
+                ans[i] = prod / nums[i];
+            }
+        }
+
+        return ans;
+    }
+};
+
+Order(n);
+
+
+SECOND APPROACH: 
 
 class Solution {
 public:
