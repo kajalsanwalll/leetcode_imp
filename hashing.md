@@ -49,6 +49,7 @@ public:
 };
 
 Order of n using hash map
+Space: O(1);
 
 
 LeetCode Contains Duplicate ✅
@@ -73,6 +74,7 @@ public:
 };
 
 Order of n
+Space: O(1);
 
 
 LeetCode Product of Array Except Self ✅
