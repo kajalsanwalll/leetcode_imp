@@ -302,5 +302,3 @@ public:
 
 Order(n);
 
-Why:
-Amazon OA frequently asks window + hashmap.
