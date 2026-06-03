@@ -1,3 +1,6 @@
+
+<img src="/Screenshot 2026-06-03 at 6.15.21 PM.png">;
+
 Pattern to remember
 Whenever you see:
 
@@ -11,3 +14,5 @@ HashSet
 Only start from numbers whose predecessor doesn't exist
 +
 Keep extending forward
+
+
