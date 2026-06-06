@@ -259,3 +259,53 @@ int rows = grid.size();
         }
         if(fresh > 0) return -1;
         return min - 1;
+
+
+
+01 Matrix
+---
+
+class Solution {
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        int rows = mat.size();
+        int cols = mat[0].size();
+        queue<pair<int,int>> q;
+        vector<vector<int>> vis(rows, vector<int>(cols,-1));
+
+        for(int r=0;r<rows;r++){
+            for(int c=0;c<cols;c++){
+                if(mat[r][c] == 0){
+                    q.push({r,c});
+                    vis[r][c] = 0;
+                }
+            }
+        }
+        vector<int> dr = {-1,1,0,0};
+        vector<int> dc = {0,0,-1,1};
+
+        while(!q.empty()){
+
+            auto [r,c] = q.front();
+            q.pop();
+            
+            for(int j=0;j<4;j++){
+                
+                int nr = r + dr[j];
+                int nc = c + dc[j];
+
+                if(nr>=0 && nr< rows && nc>=0 && nc<cols && vis[nr][nc] == -1){
+                      vis[nr][nc] = vis[r][c] + 1;
+                      q.push({nr,nc});
+                }
+                
+            }
+        }
+        return vis;
+    }
+};
+
+
+Use 2 for loops inside while loop when u care about levels, like if with each level mins increase or fresh-- etc. otherwise go for one loop
+
+
