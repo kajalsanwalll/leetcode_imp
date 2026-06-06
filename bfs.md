@@ -352,3 +352,53 @@ public:
         return -1;
     }
 };
+
+Max Area of Island
+---
+
+class Solution {
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int rows = grid.size();
+        int cols = grid[0].size();
+        vector<vector<int>> vis(rows,vector<int>(cols,-1));
+        int ans =0;
+
+        int dr[4] = {-1,1,0,0};
+        int dc[4] = {0,0,-1,1};
+
+        for(int r=0;r<rows;r++){
+            for(int c=0;c<cols;c++){
+
+                if(grid[r][c] == 1 && vis[r][c] == -1){
+
+                    int area = 0;
+                    queue<pair<int,int>> q;
+                    q.push({r,c});
+                    vis[r][c]=1;
+
+                    while(!q.empty()){
+
+                    auto [r,c] = q.front();
+                    q.pop();
+
+                    area++;
+
+                    for(int j=0;j<4;j++){
+                        int nr= r + dr[j];
+                        int nc = c + dc[j];
+
+                        if(nr>=0 && nr<rows && nc>=0 && nc<cols && vis[nr][nc] == -1 && grid[nr][nc] == 1){
+                            vis[nr][nc] = 1 ;
+                            q.push({nr,nc});
+                        }
+                    }
+                }
+                ans = max(ans,area);
+                }
+                
+            }
+        }
+        return ans;
+    }
+};
