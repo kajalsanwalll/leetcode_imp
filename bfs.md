@@ -18,7 +18,7 @@ fewest steps.
 🚨 Think BFS first.
 
 
-Template BFS
+Template BFS for graphs
 ---
 
 queue<int> q;
@@ -37,6 +37,50 @@ while(!q.empty()){
         }
     }
 }
+
+Template BFS for Grids
+---
+
+class Solution {
+public:
+    void bfs(int sr, int sc,
+             vector<vector<int>>& grid,
+             vector<vector<int>>& vis) {
+
+        int rows = grid.size();
+        int cols = grid[0].size();
+
+        queue<pair<int,int>> q;
+
+        q.push({sr, sc});
+        vis[sr][sc] = 1;
+
+        int dr[4] = {-1, 1, 0, 0};
+        int dc[4] = {0, 0, -1, 1};
+
+        while(!q.empty()) {
+
+            auto [r, c] = q.front();
+            q.pop();
+
+            // Process current cell here
+
+            for(int k = 0; k < 4; k++) {
+
+                int nr = r + dr[k];
+                int nc = c + dc[k];
+
+                if(nr >= 0 && nr < rows &&
+                   nc >= 0 && nc < cols &&
+                   !vis[nr][nc]) {
+
+                    vis[nr][nc] = 1;
+                    q.push({nr, nc});
+                }
+            }
+        }
+    }
+};
 
 Key Points
 ---
