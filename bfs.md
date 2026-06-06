@@ -95,3 +95,53 @@ public:
         return false;
     }
 };
+
+
+Number of provinces
+---
+
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+
+        vector<vector<int>> adj(n);
+
+        for(int i=0;i<n;i++){
+            for(int j=0; j<n;j++){
+                if(i != j && isConnected[i][j] == 1){
+                    adj[i].push_back(j);
+                }
+            }
+        }
+
+        vector<int> vis(n,0);
+        int count =0;
+        
+        for(int i=0;i<n;i++){
+
+            if(!vis[i]){
+
+                count++;
+
+                queue<int> q;
+                q.push(i);
+                vis[i] = 1;
+
+                while(!q.empty()){
+                    int node = q.front();
+                    q.pop();
+
+                    for(auto c : adj[node]){
+                        if(!vis[c]){
+                            vis[c] = 1;
+                            q.push(c);
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+        
+    }
+};
