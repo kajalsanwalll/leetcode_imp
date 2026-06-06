@@ -145,3 +145,37 @@ public:
         
     }
 };
+
+
+Keys and Rooms
+---
+
+class Solution {
+public:
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        int n = rooms.size();
+        vector<int> key(n,0);
+
+        queue<int> q;
+        q.push(0);
+        key[0] = 1;
+
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+
+            for(auto c : rooms[node]){
+                if(!key[c]){
+                    key[c] = 1;
+                    q.push(c);
+                }
+            }
+        } 
+        for(int i=0;i<n;i++){
+            if(!key[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+};
