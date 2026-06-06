@@ -309,3 +309,46 @@ public:
 Use 2 for loops inside while loop when u care about levels, like if with each level mins increase or fresh-- etc. otherwise go for one loop
 
 
+Shortest Path in Binary Matrix
+---
+
+class Solution {
+public:
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int rows = grid.size();
+        int cols = grid[0].size();
+        vector<vector<int>> vis(rows,vector<int>(cols,-1));
+
+        if(grid[0][0] != 0 || grid[rows-1][rows-1] == 1){
+            return -1;
+        }
+
+        queue<pair<int,int>> q;
+
+        q.push({0,0});
+        vis[0][0] = 1;
+
+        int dr[8] = {-1,-1,-1,0,0,1,1,1};
+        int dc[8] = {-1,0,1,-1,1,-1,0,1};
+
+        while(!q.empty()){
+            auto [r,c] = q.front();
+            q.pop();
+
+            if(r == rows-1 && c == rows-1){
+                return vis[r][c];
+            }
+
+            for(int j=0;j<8;j++){
+                int nr = r+ dr[j];
+                int nc = c + dc[j];
+
+                if(nr>=0 && nr<rows && nc>=0 && nc<cols && grid[nr][nc] == 0 && vis[nr][nc] == -1 ){
+                    vis[nr][nc] = 1 + vis[r][c];
+                    q.push({nr,nc});
+                }
+            }
+        }
+        return -1;
+    }
+};
