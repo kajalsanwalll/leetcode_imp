@@ -446,3 +446,57 @@ public:
         return ans;
     }
 };
+
+
+Surrounded Regions
+---
+
+class Solution {
+public:
+    void solve(vector<vector<char>>& board) {
+        int rows = board.size();
+        int cols = board[0].size();
+
+        vector<vector<int>> vis(rows,vector<int>(cols,-1));
+        queue<pair<int,int>> q;
+
+        for(int r=0;r<rows;r++){
+            for(int c=0;c<cols;c++){
+                if(r==0 || r == rows-1 || c ==0 || c == cols-1 ){
+                    
+                    if(board[r][c] == 'O' && vis[r][c] == -1){
+                        q.push({r,c});
+                        vis[r][c]=1;
+                    }
+
+                }
+            }
+        }
+
+        int dr[4] = {-1,1,0,0};
+        int dc[4] = {0,0,-1,1};
+
+        while(!q.empty()){
+            auto [r,c] = q.front();
+            q.pop();
+
+            for(int j=0;j<4;j++){
+                int nr = r + dr[j];
+                int nc = c + dc[j];
+
+                if(nr>=0 && nr<rows && nc>=0 && nc<cols && vis[nr][nc] == -1 && board[nr][nc] == 'O'){
+                    vis[nr][nc] = 1;
+                    q.push({nr,nc});
+                }
+            }
+        }
+        for(int r=0;r<rows;r++){
+            for(int c=0;c<cols;c++){
+                if(board[r][c] == 'O' && vis[r][c] == -1){
+                    
+                    board[r][c] = 'X';
+                }
+            }
+        }
+    }
+};
