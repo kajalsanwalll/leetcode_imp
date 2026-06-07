@@ -649,3 +649,52 @@ public:
         return -1;
     }
 };
+
+
+Bus Routes
+---
+
+class Solution {
+public:
+    int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {
+        unordered_map<int,vector<int>> stopToBus;
+        if(source == target){
+            return 0;
+        }
+
+        for(int bus=0; bus<routes.size();bus++){
+            for(int stop : routes[bus]){
+                stopToBus[stop].push_back(bus);
+            }
+        }
+        queue<pair<int,int>> q;
+        q.push({source,0});
+        unordered_set<int> visStops;
+        unordered_set<int> visBus;
+
+        visStops.insert(source);
+
+        while(!q.empty()){
+            auto [stop,taken] = q.front();
+            q.pop();
+
+            for(int bus : stopToBus[stop]){
+                if(visBus.count(bus)){
+                    continue;
+                }
+                visBus.insert(bus);
+
+                for(int nextStop : routes[bus]){
+                    if(nextStop == target){
+                        return 1 + taken;
+                    }
+                    if(!visStops.count(nextStop)){
+                        visStops.insert(nextStop);
+                        q.push({nextStop,taken+1});
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+};
