@@ -500,3 +500,65 @@ public:
         }
     }
 };
+
+
+Open the lock
+---
+
+class Solution {
+public:
+    int openLock(vector<string>& deadends, string target) {
+        unordered_set<string> dead(deadends.begin(),deadends.end());
+        queue<pair<string,int>> q;
+        unordered_set<string> vis;
+
+        if(dead.count("0000")) return -1;
+
+        q.push({"0000",0});
+        vis.insert("0000");
+
+        while(!q.empty()){
+            auto [r,steps] = q.front();
+            q.pop();
+
+            if(r == target){
+                return steps;
+            }
+            for(int i=0;i<4;i++){
+                int ch = r[i];
+
+                //forward
+
+                if(r[i] == '9'){
+                    r[i] = '0';
+                }else{
+                    r[i] = ch+1;
+                }
+
+                if(!dead.count(r) && !vis.count(r)){
+                    vis.insert(r);
+                    q.push({r,steps+1});
+                }
+
+                //restore
+
+                r[i] = ch;
+
+                //backward
+
+                if(r[i] == '0'){
+                    r[i] = '9';
+                }else{
+                    r[i] = ch-1;
+                }
+
+                if(!dead.count(r) && !vis.count(r)){
+                    vis.insert(r);
+                    q.push({r,steps+1});
+                }
+                r[i] = ch;
+            }
+        }
+        return -1;
+    }
+};
