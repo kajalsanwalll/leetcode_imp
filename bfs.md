@@ -562,3 +562,42 @@ public:
         return -1;
     }
 };
+
+Word Ladder
+---
+
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> s(wordList.begin(), wordList.end());
+        queue<pair<string,int>> q;
+
+        if(s.find(endWord) == s.end()){
+            return 0;
+        }
+        q.push({beginWord,1});
+
+        while(!q.empty()){
+            auto [word,steps] = q.front();
+            q.pop();
+
+            if(word == endWord){
+                return steps;
+            }
+
+            for(int i=0;i<word.size();i++){
+                string curr = word;
+
+                for(char c = 'a'; c<= 'z';c++){
+                    curr[i] = c;
+
+                    if(s.find(curr) != s.end() ){
+                    q.push({curr,steps+1});
+                    s.erase(curr);
+                }
+                }
+            }
+        }
+        return 0;
+    }
+};
