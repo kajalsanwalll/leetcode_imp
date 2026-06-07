@@ -518,45 +518,45 @@ public:
         vis.insert("0000");
 
         while(!q.empty()){
-            auto [r,steps] = q.front();
+            auto [curr,steps] = q.front();
             q.pop();
 
-            if(r == target){
+            if(curr == target){
                 return steps;
             }
             for(int i=0;i<4;i++){
-                int ch = r[i];
+                int ch = curr[i];
 
                 //forward
 
-                if(r[i] == '9'){
-                    r[i] = '0';
+                if(curr[i] == '9'){
+                    curr[i] = '0';
                 }else{
-                    r[i] = ch+1;
+                    curr[i] = ch+1;
                 }
 
-                if(!dead.count(r) && !vis.count(r)){
-                    vis.insert(r);
-                    q.push({r,steps+1});
+                if(!dead.count(curr) && !vis.count(curr)){
+                    vis.insert(curr);
+                    q.push({curr,steps+1});
                 }
 
                 //restore
 
-                r[i] = ch;
+                curr[i] = ch;
 
                 //backward
 
-                if(r[i] == '0'){
-                    r[i] = '9';
+                if(curr[i] == '0'){
+                    curr[i] = '9';
                 }else{
-                    r[i] = ch-1;
+                    curr[i] = ch-1;
                 }
 
-                if(!dead.count(r) && !vis.count(r)){
-                    vis.insert(r);
-                    q.push({r,steps+1});
+                if(!dead.count(curr) && !vis.count(curr)){
+                    vis.insert(curr);
+                    q.push({curr,steps+1});
                 }
-                r[i] = ch;
+                curr[i] = ch;
             }
         }
         return -1;
