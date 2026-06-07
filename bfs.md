@@ -601,3 +601,51 @@ public:
         return 0;
     }
 };
+
+Nearest exit from entrance in maze
+---
+
+class Solution {
+public:
+    int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
+        int rows = maze.size();
+        int cols = maze[0].size();
+
+        queue<pair<int,int>> q;
+        q.push({entrance[0],entrance[1]});
+
+        maze[entrance[0]][entrance[1]] = '+';
+
+        int dr[4] = {-1,1,0,0};
+        int dc[4] = {0,0,-1,1};
+        int steps =0;
+
+        while(!q.empty()){
+            int size = q.size();
+
+            while(size--){
+                auto [one,two] = q.front();
+                q.pop();
+
+                if(!(one == entrance[0] && two == entrance[1]) &&(one==0 || one== rows-1 || two==0 || two== cols-1)){
+                    
+                    return steps;
+                    
+                }
+
+                for(int i=0;i<4;i++){
+                  int nr = one + dr[i];
+                  int nc = two + dc[i];
+
+                 if(nr>=0 && nr<rows && nc>=0 && nc<cols && maze[nr][nc] == '.'){
+                      maze[nr][nc] = '+';
+                      q.push({nr,nc});
+                    
+                    }
+                }
+            }
+            steps++;
+        }
+        return -1;
+    }
+};
