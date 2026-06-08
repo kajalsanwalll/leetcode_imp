@@ -256,3 +256,10 @@ public:
 
 Order(n); time and space
 
+
+Trees easy questions using DFS
+---
+
+Balanced Binary tree
+---
+
