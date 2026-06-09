@@ -290,3 +290,30 @@ public:
         return letters[l% letters.size()];
     }
 };
+
+Peak index in a mountain array
+---
+
+class Solution {
+public:
+    int peakIndexInMountainArray(vector<int>& arr) {
+        int l=0;
+        int h = arr.size()-1;
+        int a = INT_MIN; //7
+        int ans=0;
+
+        while(l<h){
+            int mid = l + (h-l)/2;
+
+            if(arr[mid] < arr[mid+1]){
+                
+                l = mid+1;
+                
+            }else{
+                h = mid;
+            }
+        }
+
+        return h;
+    }
+};
