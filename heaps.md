@@ -399,4 +399,51 @@ O(log k)
 total time : O(n log k)
 total space: O(k)
 
+
+Merge k sorted lists
+---
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        auto cmp = [](ListNode* a, ListNode* b){
+            return a->val > b->val;
+        };
+
+        priority_queue<ListNode*,vector<ListNode*>,decltype(cmp)> pq(cmp);
+
+        for(auto c : lists){
+            if(c){
+              pq.push(c);
+            }
+        }
+        ListNode dummy(0);
+        ListNode* tail = &dummy;
+
+        while(!pq.empty()){
+            ListNode* a = pq.top();
+            pq.pop();
+            
+            tail->next = a;
+            tail = a;
+
+            if(a->next){
+                pq.push(a->next);
+            }
+        }
+        return dummy.next;
+    }
+};
+
+
 Amazon really likes heaps.
