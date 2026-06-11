@@ -484,4 +484,44 @@ Time O(n logn);
 Space O(n);
 
 
+Max performance of a team
+---
+
+class Solution {
+public:
+    int maxPerformance(int n, vector<int>& speed, vector<int>& efficiency, int k) {
+        int MOD = 1e9 + 7;
+
+        vector<pair<int,int>> engineers; //array
+
+        for(int i=0;i<n;i++){
+            engineers.push_back({efficiency[i],speed[i]});
+        }
+        sort(engineers.rbegin(),engineers.rend()); 
+
+        priority_queue<int, vector<int>,greater<int>> pq; //min heap
+
+        long long speedSum=0;
+        long long ans =0;
+
+        for(auto& e : engineers){
+            int currEff = e.first;
+            int currSpeed = e.second;
+
+            pq.push(currSpeed);
+            speedSum += currSpeed;
+
+            while(pq.size() > k){
+                speedSum -= pq.top();
+                pq.pop();
+            }
+            ans = max(ans,speedSum*currEff);
+        }
+        return ans%MOD;
+    }
+};
+
+time O(n log n);
+space O(n);
+
 Amazon really likes heaps.
