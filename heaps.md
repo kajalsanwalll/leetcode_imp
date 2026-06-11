@@ -524,4 +524,31 @@ public:
 time O(n log n);
 space O(n);
 
+Furthest building you can reach
+---
+
+class Solution {
+public:
+    int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
+        int n = heights.size();
+        priority_queue<int,vector<int>,greater<int>> pq; //min heap
+
+        for(int i=0;i<n-1;i++){
+            int diff = heights[i+1]-heights[i];
+
+            if(diff > 0){
+                pq.push(diff);
+                if(pq.size() > ladders){
+                    bricks -= pq.top();
+                    pq.pop();
+                }
+                if(bricks < 0){
+                    return i;
+                }
+            }
+        }
+        return heights.size()-1;
+    }
+};
+
 Amazon really likes heaps.
