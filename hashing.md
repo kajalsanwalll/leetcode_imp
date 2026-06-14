@@ -407,3 +407,43 @@ public:
     }
 };
 
+
+Find all anagrams in a string
+---
+
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        
+        int n = s.size();
+        int m = p.size();
+        if(m>n){
+            return {};
+        }
+        unordered_map<char,int> mp1;
+        unordered_map<char,int> mp2;
+        vector<int> ans;
+
+        for(char c : p){
+            mp1[c]++;
+        }
+        for(int i=0;i<m;i++){
+            mp2[s[i]]++;
+        }
+        if(mp1 == mp2){
+            ans.push_back(0);
+        }
+        for(int i=m;i<n;i++){
+            mp2[s[i]]++;
+            mp2[s[i-m]]--;
+
+            if(mp2[s[i-m]] == 0){
+                mp2.erase(s[i-m]);
+            }
+            if(mp1 == mp2){
+               ans.push_back(i-m+1);
+            }
+        }
+        return ans;
+    }
+};
