@@ -273,3 +273,39 @@ public:
 
 O(1) get
 O(1) put
+
+
+Maximum twin sum of a linked list
+---
+
+
+class Solution {
+public:
+    int pairSum(ListNode* head) {
+
+        if(!head || !head->next) return 0;
+
+        ListNode* slow=head;
+        ListNode* fast = head;
+
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+        } 
+        ListNode* second = slow;
+        ListNode* prev = NULL;
+        while(second){
+            ListNode* nextNode = second->next;
+            second->next = prev;
+            prev = second;
+            second = nextNode;
+        }
+        int ans = 0;
+        while(prev){
+            ans = max(ans,head->val + prev->val);
+            head = head->next;
+            prev = prev->next;
+        }
+        return ans;
+    }
+};
