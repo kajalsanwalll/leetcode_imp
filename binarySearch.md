@@ -339,3 +339,67 @@ public:
         return h;
     }
 };
+
+Count of Range Sum
+---
+
+class Solution {
+public:
+    int mergeSort(vector<long long>& prefix, int l, int r, int lower, int upper) {
+        if (r - l <= 1)
+            return 0;
+
+        int mid = l + (r - l) / 2;
+
+        int count = mergeSort(prefix, l, mid, lower, upper)
+                  + mergeSort(prefix, mid, r, lower, upper);
+
+        int low = mid, high = mid;
+
+        // Count valid ranges
+        for (int i = l; i < mid; i++) {
+            while (low < r && prefix[low] - prefix[i] < lower)
+                low++;
+
+            while (high < r && prefix[high] - prefix[i] <= upper)
+                high++;
+
+            count += (high - low);
+        }
+
+        // Merge step
+        vector<long long> temp;
+        int i = l, j = mid;
+
+        while (i < mid && j < r) {
+            if (prefix[i] <= prefix[j])
+                temp.push_back(prefix[i++]);
+            else
+                temp.push_back(prefix[j++]);
+        }
+
+        while (i < mid)
+            temp.push_back(prefix[i++]);
+
+        while (j < r)
+            temp.push_back(prefix[j++]);
+
+        for (int k = l; k < r; k++) {
+            prefix[k] = temp[k - l];
+        }
+
+        return count;
+    }
+
+    int countRangeSum(vector<int>& nums, int lower, int upper) {
+        int n = nums.size();
+
+        vector<long long> prefix(n + 1, 0);
+
+        for (int i = 0; i < n; i++) {
+            prefix[i + 1] = prefix[i] + nums[i];
+        }
+
+        return mergeSort(prefix, 0, n + 1, lower, upper);
+    }
+};
