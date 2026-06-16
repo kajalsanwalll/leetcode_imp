@@ -586,4 +586,28 @@ public:
     }
 };
 
+
+Kth smallest element in sorted matrix
+---
+
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int m = matrix.size(), n = matrix[0].size(); 
+        priority_queue<int> maxHeap;
+        for (int r = 0; r < m; ++r) {
+            for (int c = 0; c < n; ++c) {
+                maxHeap.push(matrix[r][c]);
+                if (maxHeap.size() > k) maxHeap.pop();
+            }
+        }
+        return maxHeap.top();
+
+    }
+};
+
+O(n^2)
+
+
+
 Amazon really likes heaps.
