@@ -477,3 +477,31 @@ public:
         return to_string(bulls) + 'A' + to_string(cows) + 'B';
     }
 };
+
+
+Contiguous Array
+---
+
+class Solution {
+public:
+    int findMaxLength(vector<int>& nums) {
+        int sum=0, maxLen=0;
+        unordered_map<int, int> mp;
+        mp[0] = -1;
+        
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i] == 1){
+                sum += 1; 
+            }else{
+                sum += -1;  // sum = 0
+            }
+            if(mp.count(sum)){
+                maxLen = max(maxLen, i-mp[sum]); //len = 2
+            } 
+            else{
+                mp[sum] = i;
+            } 
+        }
+        return maxLen;
+    }
+};
