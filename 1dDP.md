@@ -1,6 +1,162 @@
-13. One DP
+13. DP
 
-Just one easy DP.
+Universal DP Template
+---
+
+Step 1: Define the State
+--
+Ask:
+"What minimum information completely describes my current situation?"
+Usually:
+dp[i]
+dp[i][j]
+dp[index][target]
+dp[index][prev]
+
+example:
+
+| Problem         | State           |
+| --------------- | --------------- |
+| Climbing Stairs | dp[i]           |
+| House Robber    | dp[i]           |
+| Coin Change     | dp[amount]      |
+| LCS             | dp[i][j]        |
+| Knapsack        | dp[i][capacity] |
+| Edit Distance   | dp[i][j]        |
+
+
+Step 2: Find the Choices
+--
+Ask:
+"From this state, what decisions can I make?"
+
+ex:
+
+Climbing Stairs:
+take 1 step
+take 2 steps
+
+House Robber:
+rob current house
+skip current house
+
+Knapsack:
+pick item
+don't pick item
+
+Step 3: Write Recurrence
+--
+Combine the choices.
+
+Sum
+dp[state] = choice1 + choice2;
+
+Maximum
+dp[state] = max(choice1, choice2);
+
+Minimum
+dp[state] = min(choice1, choice2);
+
+Step 4: Base Case
+--
+Ask:
+"When does recursion stop?"
+
+Examples:
+if(i == n)
+    return ...;
+
+if(target == 0)
+    return ...;
+
+if(i < 0)
+    return ...;
+
+
+Step 5: Memoization
+--
+Generic Top-Down Template
+
+vector<int> memo;
+
+int solve(int state) {
+
+    // base case
+    if(...)
+        return ...;
+
+    // already computed
+    if(memo[state] != -1)
+        return memo[state];
+
+    // recurrence
+    return memo[state] =
+           combine(
+               solve(nextState1),
+               solve(nextState2)
+           );
+}
+
+
+Bottom-Up Template
+
+Suppose recursion was:
+f(i)=f(i-1)+f(i-2)
+Then:
+
+vector<int> dp(n+1);
+
+dp[base] = value;
+
+for(int i=...) {
+    dp[i] =
+        combine(
+            dp[previous states]
+        );
+}
+
+Space Optimization
+Ask:
+"Do I really need the entire DP array?"
+If only previous states are used:
+prev2
+prev1
+
+for(...) {
+    curr = ...
+    prev2 = prev1;
+    prev1 = curr;
+}
+
+
+Complete Interview Template
+---
+Whenever you get a DP question, say:
+
+1. State
+I'll define dp[state] as ...
+
+2. Transition
+From the current state, I have these choices:
+choice 1
+choice 2
+Therefore,
+dp[state] =
+    combine(choice1, choice2);
+
+3. Base Cases
+When ... we stop recursion.
+if(...)
+    return ...
+
+4. Memoization
+Since overlapping subproblems exist, I'll cache each state.
+
+5. Complexity
+Time = number of states × work per state
+Space = size of dp table
+
+
 
 LeetCode Climbing Stairs
 ---
