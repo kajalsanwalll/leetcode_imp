@@ -279,6 +279,24 @@ public:
 };
 
 
+Min Cost Climbing Stairs
+---
+
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        int first=0;
+        int second=0;
+
+        for(int n=cost.size()-1;n>=0;n--){
+            int ans = cost[n] + min(first,second);
+            second = first;
+            first = ans;
+        }
+        return min(first,second);
+    }
+};
+
 Coin change
 ---
 
