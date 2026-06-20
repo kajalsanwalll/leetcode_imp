@@ -220,6 +220,36 @@ public:
     }
 };
 
+House Robber II
+---
+
+class Solution {
+public:
+    int solve(vector<int>& nums, int start, int end){
+        int sum1=0;
+        int sum2=0;
+
+        for(int i=end;i>=start;i--){
+            int ans = max(nums[i]+sum2,sum1);
+            sum2 = sum1;
+            sum1 = ans;
+
+        }
+        return sum1;
+    }
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        
+        if(n==1){
+            return nums[0];
+        }
+
+        int notLast = solve(nums,0,n-2);
+        int notFirst = solve(nums,1,n-1);
+
+        return max(notLast,notFirst);
+    }
+};
 
 Coin change
 ---
