@@ -251,6 +251,34 @@ public:
     }
 };
 
+House Robber III
+---
+
+
+class Solution {
+public:
+    // 2 starting states
+    pair<int,int> solve(TreeNode* root){
+        if(root == nullptr) return {0,0};
+
+        auto left = solve(root->left);
+        auto right = solve(root->right);
+
+        int skipRoot = max(left.first,left.second) +
+                       max(right.first,right.second);
+
+        int takeRoot = root->val +
+                       left.first +
+                       right.first;
+        return {skipRoot,takeRoot};               
+    }
+    int rob(TreeNode* root) {
+        auto ans = solve(root);
+        return max(ans.first,ans.second);
+    }
+};
+
+
 Coin change
 ---
 
