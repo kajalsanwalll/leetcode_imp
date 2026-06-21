@@ -78,6 +78,38 @@ public:
     }
 };
 
+Linked list cycle II
+---
+
+
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+
+            if(slow == fast){
+                ListNode* p = head;
+
+                while(p != slow){
+                    slow = slow->next;
+                    p = p->next;
+                }
+                return p;
+            }
+        }
+        return NULL;
+    }
+};
+
+Time O(n);
+Space O(1);
+
+
 LeetCode Merge Two Sorted Lists
 ---
 
