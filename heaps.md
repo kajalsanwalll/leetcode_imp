@@ -713,5 +713,34 @@ public:
     }
 };
 
+Ugly Number II
+---
+
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        vector<int> primes = {2,3,5};
+        priority_queue<long,vector<long>,greater<long>>pq; //min
+        unordered_set<long> v;
+
+        pq.push(1);
+        v.insert(1);
+
+        long rn;
+        for(int i=0;i<n;++i){
+            rn = pq.top();
+            pq.pop();
+
+            for(int p : primes){
+                long new1 = rn*p;
+                if(v.find(new1) == v.end()){
+                    pq.push(new1);
+                    v.insert(new1);
+                }
+            }
+        }
+        return (int)rn;
+    }
+};
 
 Amazon really likes heaps.
