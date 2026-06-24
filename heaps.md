@@ -743,4 +743,32 @@ public:
     }
 };
 
+Super ugly number
+---
+
+class Solution {
+public:
+    int nthSuperUglyNumber(int n, vector<int>& primes) {
+        priority_queue<long long,vector<long long>,greater<long long>> pq;
+        long long x = 0;
+
+        pq.push(1);
+        int cnt = 0;
+        int i = 0;
+       
+        while(!pq.empty() && cnt != n){
+            long long a = pq.top();
+            x = a;
+            for(int j=0;j<primes.size();j++){
+                pq.push(a*primes[j]);
+            }
+            while(!pq.empty() && a == pq.top()){
+                pq.pop();
+            }
+            cnt++;
+        }
+        return x;
+    }
+};
+
 Amazon really likes heaps.
