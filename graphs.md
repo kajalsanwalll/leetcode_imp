@@ -257,3 +257,41 @@ public:
         return 0;
     }
 };
+
+Flood fill
+---
+
+class Solution {
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int rows = image.size();
+        int cols = image[0].size();
+
+        int store = image[sr][sc];
+        if(store == color) return image;
+
+        queue<pair<int,int>> q;
+        q.push({sr,sc});
+
+        image[sr][sc] = color;
+
+        int dr[4] = {-1,1,0,0};
+        int dc[4] = {0,0,-1,1};
+
+        while(!q.empty()){
+            auto [r,c] = q.front();
+            q.pop();
+
+            for(int j=0;j<4;j++){
+                int nr = r + dr[j];
+                int nc = c + dc[j];
+
+                if(nr>=0 && nc>=0 && nr<rows && nc<cols && image[nr][nc] == store ){
+                    image[nr][nc] = color;
+                    q.push({nr,nc});
+                }
+            }
+        }
+        return image;
+    }
+};
