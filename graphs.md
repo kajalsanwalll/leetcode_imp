@@ -295,3 +295,54 @@ public:
         return image;
     }
 };
+
+
+Snakes and Ladders
+---
+
+class Solution {
+public:
+    pair<int,int> getCoordinates(int num, int n){
+        int rows = n - 1 - (num - 1) / n;
+        int cols = (num - 1) % n;
+
+        if(((n - 1 - rows) % 2) == 1){
+            cols = n - 1 - cols;
+        }
+
+        return {rows, cols};
+    }
+
+    int snakesAndLadders(vector<vector<int>>& board) {
+        int n = board.size();
+        vector<bool> vis(n * n + 1, false);
+
+        queue<pair<int,int>> q;
+        q.push({1,0});
+        vis[1] = true;
+
+        while(!q.empty()){
+            auto [r,c] = q.front();
+            q.pop();
+
+            if(r == n * n) return c;
+
+            for(int x = 1; x <= 6 && r + x <= n * n; x++){
+                int next = r + x;
+
+                auto [a,b] = getCoordinates(next,n);
+
+                if(board[a][b] != -1){
+                    next = board[a][b];
+                }
+
+                if(!vis[next]){
+                    vis[next] = true;
+                    q.push({next, c + 1});
+                }
+            }
+        }
+
+        return -1;
+    }
+};
